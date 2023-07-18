@@ -19,8 +19,6 @@ for KEY in "${!CHECK_DIRS[@]}"; do
     fi
 done
 
-
-
 # TODO: Look for other files related to nix home manager etc
 declare -A SHELLS
 SHELLS[ETC_ZSHRC]=/etc/zshrc
@@ -37,7 +35,10 @@ for KEY in "${!SHELLS[@]}"; do
     # TODO Check for .before-nix files .before-darinw-nix
 done
 
-# install nix
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Nix
 printf "Starting the nix installation...\n\n"
 sh <(curl -sS -L https://nixos.org/nix/install)
 
@@ -49,14 +50,15 @@ bash -c nix-shell -p nix-info --run "nix-info -m"
 # Check if nix installed look for command nix
 
 
-# install chezmoi
+# Install Chezmoi
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init -b $HOME/.local/bin --apply "$CHEZMOI_NIX_REPO"
-
 
 # Install darwin-nix
 cd $HOME/.config/nix-darwin/
 bash -c nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 bash -c ./result/bin/darwin-installer
+
+# Install Flake
 bash -c darwin-rebuild switch --flake .#
 
 
