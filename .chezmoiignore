@@ -1,0 +1,3 @@
+*/result        # ignore nix result symlink directories
+*/.git          # ignore git directories 
+*/.gitignore    # ignore .gitignore
