@@ -34,7 +34,7 @@ for KEY in "${!SHELLS[@]}"; do
         printf "Backing up '${SHELLS[$KEY]}' to '${SHELLS[$KEY]}.before-chezmoi-nix'\n"
         sudo -S mv "${SHELLS[$KEY]}" "${SHELLS[$KEY]}.before-chezmoi-nix"
     fi
-    TODO Check for .before-nix files .before-darinw-nix
+    # TODO Check for .before-nix files .before-darinw-nix
 done
 
 # install nix
