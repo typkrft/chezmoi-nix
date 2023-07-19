@@ -121,14 +121,15 @@ install_nix_darwin() {
     fi
 
 
-    osascript <<EOF
-    tell application "Terminal"
-        do script '
-            path+=('/nix/var/nix/profiles/default/bin')
-            cd $dirs[nix_darwin]
-            nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-            ./result/bin/darwin-installer
-        '
+    osascript  - "$dirs[nix_darwin]" <<EOF
+    on run argv
+        tell application "Terminal"
+            do script ("
+                path+=('/nix/var/nix/profiles/default/bin')
+                cd " & quoted form of item 1 of argv & "
+                nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+                ./result/bin/darwin-installer
+            ")
     end tell 
 EOF
 
@@ -199,3 +200,5 @@ main () {
 
 
 main
+
+# NOTE:  Run with zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap.sh)
