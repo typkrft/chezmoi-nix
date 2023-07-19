@@ -51,7 +51,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/in
 
 # Install Nix
 printf "Starting the nix installation...\n\n"
-curl -sS -L https://nixos.org/nix/install | sh
+sudo -S bash -c "$(curl -sS -L https://nixos.org/nix/install)"
 
 # Fix because sometimes this doesn't happen
 bash -c sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
