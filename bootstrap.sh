@@ -46,13 +46,13 @@ for KEY in "${!SHELLS[@]}"; do
     fi
 
     # Create Blank files
-    sudo -S touch "/etc/${SHELLS[$KEY]}"
+    sudo -S touch "${SHELLS[$KEY]}"
 done
 
 declare -A URLS
 URLS[HOMEBREW]='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
 URLS[NIX]='https://nixos.org/nix/install'
-URLS[CHEZMOI]='get.chezmoi.io'
+URLS[CHEZMOI]='https://get.chezmoi.io'
 
 for KEY in "${!URLS[@]}"; do
     printf "Starting ${URLS[$KEY]} Installation"
