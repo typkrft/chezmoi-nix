@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 backup_etc_configs() {
-    for file in "${(v)files[@]}"; do
+    for file in "$files"; do
         timestamp=$(date +%s%N)
         if [ -f "$file" ]; then
             echo "Moving $file to $file.before-chezmoi-nix-uninstall.$timestamp"
@@ -72,8 +72,8 @@ rm_partition() {
 
 
 main() {
-    if [ -d '/nix' ]; then
-        echo "Partion '/nix' does not exist exiting." 
+    if [[ -z "$(ls -A /nix)" ]]; then
+        echo "\n\nPartion '/nix' does not exist or is empty. Exiting.\n" 
         exit 1
     fi
     
@@ -93,7 +93,7 @@ main() {
     rm_system_files
     rm_partition
 
-    echo "Nix has been uninstalled. Partition '\\nix' will appear until you reboot."
+    echo "Nix has been uninstalled. Partition " '\nix' " will appear until you reboot."
 
 }
 
