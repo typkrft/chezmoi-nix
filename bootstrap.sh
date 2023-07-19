@@ -1,82 +1,155 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-PATH="$PATH:$HOME/.local/bin"
-CHEZMOI_NIX_REPO='https://github.com/typkrft/chezmoi-nix.git'
+check_previous_installs() {
+    echo "Checking for previous installations..."
+    for directory in $1; do
+        if [ -d $directory ]; then
+            echo "Conflicting installation found: '$directory'.\n\n"
+            echo "Please ensure you backup and uninstall your previous installations first."
+            echo "https://nixos.org/manual/nix/unstable/installation/uninstall.html"
+            echo "https://www.chezmoi.io/user-guide/advanced/migrate-away-from-chezmoi"
+            exit 1
+        fi
+    done
+}
 
-declare -A CHECK_DIRS
-CHECK_DIRS[CHEZMOI]="$HOME/.local/share/chezmoi"
-CHECK_DIRS[NIX_DARWIN]="$HOME/.config/nix-darwin"
-CHECK_DIRS[NIX]='/nix'
 
-printf "Checking for previous installations...\n"
-for KEY in "${!CHECK_DIRS[@]}"; do
-    if [ -d ${CHECK_DIRS[$KEY]} ]; then
-        printf "Conflicting installation found in Directory '${CHECK_DIRS[$KEY]}.'\n\n"
-        printf "Please ensure currently installations are backed up and moved.\n"
-        printf "https://nixos.org/manual/nix/unstable/installation/uninstall.html\n"
-        printf "https://www.chezmoi.io/user-guide/advanced/migrate-away-from-chezmoi\n"
+backup_create_configs() {
+    for file in "${(v)files[@]}"; do
+        timestamp=$(date +%s%N)
+
+        if [ -f "$file" ]; then
+            sudo -S mv "$file" "$file.before-chezmoi-nix.$timestamp"
+        fi
+
+        if [ -f "$file.backup-before-nix" ]; then
+            sudo -S mv "$file.backup-before-nix" "$file.before-chezmoi-nix.$timestamp"
+        fi
+
+        if [ -f "$file.before-nix" ]; then 
+            sudo -S mv "$file.before-nix" "$file.before-chezmoi-nix.$timestamp"
+        fi
+
+        if [ -f "$file.backup-before-nix-darwin" ]; then
+            sudo -S mv "$file.backup-before-nix-darwin" "$file.before-chezmoi-nix.$timestamp"
+        fi
+
+        sudo -S >$file
+
+    done
+}
+
+
+install_homebrew() {
+    echo "Attempting to install Homebrew..."
+    bash -ci "$(curl -fLsS $urls[homebrew])"
+    
+    if [ $? -eq 0 ]; then
+        echo "Homebrew was installed Successfully."
+    else
+        echo "Installation of Homebrew failed. Exiting."
         exit 1
     fi
-done
+}
 
-# TODO: Look for other files related to nix home manager etc
-declare -A SHELLS
-SHELLS[ETC_ZSHRC]='/etc/zshrc'
-SHELLS[ETC_BASHRC]='/etc/bashrc'
-SHELLS[ETC_BASH]='/etc/bash.bashrc'
-SHELLS[ETC_SHELLS]='/etc/shells'
 
-printf "Looking for existing shell configs in /etc/...\n"
-for KEY in "${!SHELLS[@]}"; do
-    TIMESTAMP=$(date +%s%N)
+install_nix() {
+    echo "Attempting to install Nix..."
+    bash -ci "$(curl -fLsS $urls[nix])"
     
-    if [ -f "${SHELLS[$KEY]}" ]; then
-        printf "Backing up '${SHELLS[$KEY]}' to '${SHELLS[$KEY]}.$TIMESTAMP.before-chezmoi-nix'\n"
-        sudo -S mv "${SHELLS[$KEY]}" "${SHELLS[$KEY]}.before-chezmoi-nix"
+    if [ $? -ne 0 ]; then
+        echo "Installation of Nix failed. Exiting."
+        exit 1
     fi
 
-    if [ -f "${SHELLS[$KEY]}.backup-before-nix" ]; then
-        printf "Backing up '${SHELLS[$KEY]}.backup-before-nix' to '${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix'\n"
-        sudo -S mv "${SHELLS[$KEY]}.backup-before-nix" "${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix"
-    fi 
+    echo "Post Installation Setup of Nix"
+    path+=('/nix/var/nix/profiles/default/bin')
+    NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
 
-    if [ -f "${SHELLS[$KEY]}.backup-before-nix-darwin" ]; then
-        printf "Backing up '${SHELLS[$KEY]}.backup-before-nix-darwin' to '${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix-darwin'\n"
-        sudo -S mv "${SHELLS[$KEY]}.backup-before-nix-darwin" "${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix-darwin"
+    sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
+    sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
+    nix-shell -p nix-info --run "nix-info -m"
+
+    if [ $? -ne 0 ]; then
+        echo "Post Installation of Nix failed. Exiting."
+        exit 1
     fi
 
-    # Create Blank files
-    sudo -S touch "${SHELLS[$KEY]}"
-done
-
-declare -A URLS
-URLS[HOMEBREW]='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
-URLS[NIX]='https://nixos.org/nix/install'
-URLS[CHEZMOI]='https://get.chezmoi.io'
-
-for KEY in "${!URLS[@]}"; do
-    printf "Starting ${URLS[$KEY]} Installation"
-    bash -ci sudo -S "$(curl -fsSL ${URLS[$KEY]})"
-done
-
-# Fix because sometimes this doesn't happen
-bash -c sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
-bash -c sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
-bash -c nix-shell -p nix-info --run "nix-info -m"
-
-# Check if nix installed look for command nix
+    echo "Nix was installed Successfully."
+}
 
 
-# Install Chezmoi
-# sh -c "$(curl -fsLS get.chezmoi.io)" -- init -b $HOME/.local/bin --apply "$CHEZMOI_NIX_REPO"
+install_chezmoi() {
+    echo "Attempting to install Chezmoi..."
+    bash -ci "$(curl -fLsS $urls[Chezmoi])" -- -b $HOME/.local/bin
+    
+    if [ $? -ne 0 ]; then
+        echo "Installation of Chezmoi failed. Exiting."
+        exit 1
+    fi
 
-# Install darwin-nix
-# cd $HOME/.config/nix-darwin/
-# bash -c nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-# bash -c ./result/bin/darwin-installer
+    echo "Post Installation setup for Chezmoi"
+    path+=("$HOME/.local/bin")
+    chezmoi init "$urls[dots]"
+    chezmoi apply -v
 
-# Install Flake
-# bash -c darwin-rebuild switch --flake .#
+    echo "Chezmoi was installed Successfully."
+}
 
 
+install_nix_darwin() {
+    echo "Installing Nix-Darwin"
+    cd "$dirs[nix-darwin]"
+    
+    git init
+    git add -A
+    
+    nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+    ./result/bin/darwin-installer
+    echo "Nix-Darwin Installed Successfully"
+}
 
+
+install_flake() {
+    nix-darwin -- switch --flake "$dirs[nix_darwin]/.#"
+}
+
+
+main () {
+    declare -A urls
+    declare -A files
+    declare -A dirs
+
+    urls=(
+        [dots]='https://github.com/typkrft/chezmoi-nix.git'
+        [homebrew]='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+        [nix]='https://nixos.org/nix/install'
+        [chezmoi]='https://get.chezmoi.io'
+    )
+
+    files=(
+        [etc_zshrc]='/etc/zshrc'
+        [etc_bashrc]='/etc/bashrc'
+        [etc_bash]='/etc/bash.bashrc'
+        [etc_shells]='/etc/shells'
+    )
+
+    dirs=(
+        [chezmoi_source]="$HOME/.local/share/chezmoi"
+        [chezmoi_bin]="$HOME/.local/bin"
+        [nix_store]="/nix"
+        [nix_darwin]="$HOME/.config/nix-darwin"
+    )
+
+    install_dirs=( "$dirs[chezmoi_source]" "$dirs[nix_store]" "$dirs[nix_darwin]" )
+    check_previous_installs "$install_dirs"
+    backup_create_configs "$files"
+    install_homebrew
+    install_chezmoi
+    install_nix
+    install_nix_darwin
+    install_flake
+}
+
+
+main
