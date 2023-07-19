@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 check_previous_installs() {
-    echo "Checking for previous installations..."
+    echo "Checking for previous installations...\n"
     for directory in $1; do
         if [ -d $directory ]; then
             echo "Conflicting installation found: '$directory'.\n\n"
@@ -19,21 +19,26 @@ backup_create_configs() {
         timestamp=$(date +%s%N)
 
         if [ -f "$file" ]; then
+            echo "Moving '$file' to '$file.before-chezmoi-nix.$timestamp'\n"
             sudo -S mv "$file" "$file.before-chezmoi-nix.$timestamp"
         fi
 
         if [ -f "$file.backup-before-nix" ]; then
+            echo "Moving '$file.backup-before-nix' to '$file.before-chezmoi-nix.$timestamp'\n"            
             sudo -S mv "$file.backup-before-nix" "$file.before-chezmoi-nix.$timestamp"
         fi
 
         if [ -f "$file.before-nix" ]; then 
+            echo "Moving '$file.before-nix' to '$file.before-chezmoi-nix.$timestamp'\n"            
             sudo -S mv "$file.before-nix" "$file.before-chezmoi-nix.$timestamp"
         fi
 
         if [ -f "$file.backup-before-nix-darwin" ]; then
+            echo "Moving '$file.backup-before-nix-darwin' to '$file.before-chezmoi-nix.$timestamp'\n"            
             sudo -S mv "$file.backup-before-nix-darwin" "$file.before-chezmoi-nix.$timestamp"
         fi
 
+        echo "Creating $file\n"
         sudo -S >$file
 
     done
@@ -41,7 +46,7 @@ backup_create_configs() {
 
 
 install_homebrew() {
-    echo "Attempting to install Homebrew..."
+    echo "\n\nInstalling Homebrew\n"
     bash -ci "$(curl -fLsS $urls[homebrew])"
     
     if [ $? -eq 0 ]; then
@@ -54,15 +59,15 @@ install_homebrew() {
 
 
 install_nix() {
-    echo "Attempting to install Nix..."
+    echo "\n\nInstalling Nix\n"
     bash -ci "$(curl -fLsS $urls[nix])"
     
     if [ $? -ne 0 ]; then
-        echo "Installation of Nix failed. Exiting."
+        echo "\n\nInstallation of Nix failed. Exiting\n"
         exit 1
     fi
 
-    echo "Post Installation Setup of Nix"
+    echo "\n\nPost Installation Setup of Nix\n"
     path+=('/nix/var/nix/profiles/default/bin')
     NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
 
@@ -71,16 +76,16 @@ install_nix() {
     nix-shell -p nix-info --run "nix-info -m"
 
     if [ $? -ne 0 ]; then
-        echo "Post Installation of Nix failed. Exiting."
+        echo "\n\nPost Installation of Nix failed. Exiting\n"
         exit 1
     fi
 
-    echo "Nix was installed Successfully."
+    echo "\n\nNix was installed Successfully\n"
 }
 
 
 install_chezmoi() {
-    echo "Attempting to install Chezmoi..."
+    echo "\n\nInstalling Chezmoi\n"
     echo "$urls[chezmoi]"
     bash -ci "$(curl -fLsS $urls[chezmoi])" -- -b $HOME/.local/bin
     
@@ -99,7 +104,7 @@ install_chezmoi() {
 
 
 install_nix_darwin() {
-    echo "Installing Nix-Darwin"
+    echo "\n\nInstalling Nix-Darwin\n"
 
     path+=('/nix/var/nix/profiles/default/bin')
     NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
@@ -107,15 +112,31 @@ install_nix_darwin() {
     sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
        
     git --git-dir "$dirs[nix_darwin]" init
+    if [ $? -ne 0 ]; then
+        echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
+        exit 1
+    fi
+
     git --git-dir "$dirs[nix_darwin]" add -A
     
     (cd "$dirs[nix_darwin]"; nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer)
+    if [ $? -ne 0 ]; then
+        echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
+        exit 1
+    fi
+    
     "$dirs[nix_darwin]/result/bin/darwin-installer"
-    echo "Nix-Darwin Installed Successfully"
+    if [ $? -ne 0 ]; then
+        echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
+        exit 1
+    fi
+    
+    echo "\n\nNix-Darwin Installed Successfully\n"
 }
 
 
 install_flake() {
+    echo "\n\nInstalling Nix-Darwin Flake\n"
     nix-darwin -- switch --flake "$dirs[nix_darwin]/.#"
 }
 
@@ -154,6 +175,8 @@ main () {
     install_nix
     install_nix_darwin
     install_flake
+
+    echo "\n\nBootstrap Complete\n"
 }
 
 
