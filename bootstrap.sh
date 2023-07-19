@@ -28,19 +28,30 @@ SHELLS[ETC_SHELLS]=/etc/shells
 
 printf "Looking for existing shell configs in /etc/...\n"
 for KEY in "${!SHELLS[@]}"; do
+    TIMESTAMP=$(date +%s%N)
+    
     if [ -f "${SHELLS[$KEY]}" ]; then
-        printf "Backing up '${SHELLS[$KEY]}' to '${SHELLS[$KEY]}.before-chezmoi-nix'\n"
+        printf "Backing up '${SHELLS[$KEY]}' to '${SHELLS[$KEY]}.$TIMESTAMP.before-chezmoi-nix'\n"
         sudo -S mv "${SHELLS[$KEY]}" "${SHELLS[$KEY]}.before-chezmoi-nix"
     fi
-    # TODO Check for .before-nix files .before-darinw-nix
+
+    if [ -f "${SHELLS[$KEY]}.backup-before-nix" ]; then
+        printf "Backing up '${SHELLS[$KEY]}.backup-before-nix' to '${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix'\n"
+        sudo -S mv "${SHELLS[$KEY]}.backup-before-nix" "${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix"
+    fi 
+
+    if [ -f "${SHELLS[$KEY]}.backup-before-nix-darwin" ]; then
+        printf "Backing up '${SHELLS[$KEY]}.backup-before-nix-darwin' to '${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix-darwin'\n"
+        sudo -S mv "${SHELLS[$KEY]}.backup-before-nix-darwin" "${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix-darwin"
+    fi
 done
 
 # Install Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install Nix
 printf "Starting the nix installation...\n\n"
-sh <(curl -sS -L https://nixos.org/nix/install)
+sh -c <(curl -sS -L https://nixos.org/nix/install)
 
 # Fix because sometimes this doesn't happen
 bash -c sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
