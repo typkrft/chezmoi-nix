@@ -123,12 +123,12 @@ install_nix_darwin() {
 
     osascript <<EOF
     tell application "Terminal"
-        do script "
+        do script '
             path+=('/nix/var/nix/profiles/default/bin')
             cd $dirs[nix_darwin]
             nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
             ./result/bin/darwin-installer
-        "
+        '
     end tell 
 EOF
 
