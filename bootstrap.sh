@@ -105,27 +105,28 @@ install_chezmoi() {
 
 install_nix_darwin() {
     echo "\n\nInstalling Nix-Darwin\n"
-
-    path+=('/nix/var/nix/profiles/default/bin')
-    NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
-    sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
-    sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
        
-    git --git-dir "$dirs[nix_darwin]" init
+    (
+        cd "$dirs[nix_darwin]" 
+        git init
+        git add -A
+    )
     if [ $? -ne 0 ]; then
         echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
         exit 1
     fi
 
-    git --git-dir "$dirs[nix_darwin]" add -A
     
-    (cd "$dirs[nix_darwin]"; nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer)
-    if [ $? -ne 0 ]; then
-        echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
-        exit 1
-    fi
-    
-    "$dirs[nix_darwin]/result/bin/darwin-installer"
+    (
+        path+=('/nix/var/nix/profiles/default/bin')
+        NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
+        sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
+        sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
+
+        cd "$dirs[nix_darwin]" 
+        nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+        ./result/bin/darwin-installer
+    )
     if [ $? -ne 0 ]; then
         echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
         exit 1

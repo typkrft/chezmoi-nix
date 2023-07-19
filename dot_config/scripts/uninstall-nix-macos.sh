@@ -72,8 +72,9 @@ rm_partition() {
 
 
 main() {
-    if [ -d /nix ]; then
+    if [ -d '/nix' ]; then
         echo "Partion '/nix' does not exist exiting." 
+        exit 1
     fi
     
     declare -A files
