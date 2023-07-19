@@ -81,7 +81,7 @@ install_nix() {
 
 install_chezmoi() {
     echo "Attempting to install Chezmoi..."
-    bash -ci "$(curl -fLsS $urls[Chezmoi])" -- -b $HOME/.local/bin
+    bash -ci "$(curl -fLsS $urls[chezmoi])" -- -b $HOME/.local/bin
     
     if [ $? -ne 0 ]; then
         echo "Installation of Chezmoi failed. Exiting."
@@ -121,7 +121,7 @@ main () {
     declare -A dirs
 
     urls=(
-        [dots]='https://github.com/typkrft/chezmoi-nix.git'
+        [dots]='https://github.com/typkrft/chezmoi-nix'
         [homebrew]='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
         [nix]='https://nixos.org/nix/install'
         [chezmoi]='https://get.chezmoi.io'
