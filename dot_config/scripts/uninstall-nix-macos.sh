@@ -73,7 +73,7 @@ rm_partition() {
 
 main() {
     if [[ -z "$(ls -A /nix)" ]]; then
-        echo "\n\nPartion '/nix' does not exist or is empty. Exiting.\n" 
+        printf "\n\nPartion '/%s' does not exist or is empty. Exiting.\n" 'nix'
         exit 1
     fi
     
@@ -93,7 +93,7 @@ main() {
     rm_system_files
     rm_partition
 
-    echo "Nix has been uninstalled. Partition " '\nix' " will appear until you reboot."
+    printf "Nix has been uninstalled. Partition /%s will appear until you reboot." 'nix'
 
 }
 
