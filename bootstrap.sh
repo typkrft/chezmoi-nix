@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 PATH="$PATH:$HOME/.local/bin"
-$CHEZMOI_NIX_REPO='https://github.com/typkrft/chezmoi-nix.git'
+CHEZMOI_NIX_REPO='https://github.com/typkrft/chezmoi-nix.git'
 
 declare -A CHECK_DIRS
-CHECK_DIRS[CHEZMOI]=$HOME/.local/share/chezmoi
-CHECK_DIRS[NIX_DARWIN]=$HOME/.config/nix-darwin
-CHECK_DIRS[NIX]=/nix
+CHECK_DIRS[CHEZMOI]="$HOME/.local/share/chezmoi"
+CHECK_DIRS[NIX_DARWIN]="$HOME/.config/nix-darwin"
+CHECK_DIRS[NIX]='/nix'
 
 printf "Checking for previous installations...\n"
 for KEY in "${!CHECK_DIRS[@]}"; do
