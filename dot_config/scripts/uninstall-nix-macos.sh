@@ -92,7 +92,7 @@ main() {
     rm_system_files
     rm_partition
 
-    echo "Nix has been uninstalled. Partition '\nix' will appear until you reboot."
+    echo "Nix has been uninstalled. Partition '\\nix' will appear until you reboot."
 
 }
 

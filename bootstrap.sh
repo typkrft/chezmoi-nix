@@ -100,14 +100,17 @@ install_chezmoi() {
 
 install_nix_darwin() {
     echo "Installing Nix-Darwin"
+
     path+=('/nix/var/nix/profiles/default/bin')
     NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
+    sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
+    sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
        
-    git --git-dir "$dirs[nix-darwin]" init
-    git --git-dir "$dirs[nix-darwin]" add -A
+    git --git-dir "$dirs[nix_darwin]" init
+    git --git-dir "$dirs[nix_darwin]" add -A
     
-    (cd "$dirs[nix-darwin]"; nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer)
-    "$dirs[nix-darwin]/result/bin/darwin-installer"
+    (cd "$dirs[nix_darwin]"; nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer)
+    "$dirs[nix_darwin]/result/bin/darwin-installer"
     echo "Nix-Darwin Installed Successfully"
 }
 
