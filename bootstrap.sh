@@ -81,6 +81,7 @@ install_nix() {
 
 install_chezmoi() {
     echo "Attempting to install Chezmoi..."
+    echo "$urls[chezmoi]"
     bash -ci "$(curl -fLsS $urls[chezmoi])" -- -b $HOME/.local/bin
     
     if [ $? -ne 0 ]; then
@@ -99,13 +100,14 @@ install_chezmoi() {
 
 install_nix_darwin() {
     echo "Installing Nix-Darwin"
-    cd "$dirs[nix-darwin]"
+    path+=('/nix/var/nix/profiles/default/bin')
+    NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
+       
+    git --git-dir "$dirs[nix-darwin]" init
+    git --git-dir "$dirs[nix-darwin]" add -A
     
-    git init
-    git add -A
-    
-    nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-    ./result/bin/darwin-installer
+    (cd "$dirs[nix-darwin]"; nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer)
+    "$dirs[nix-darwin]/result/bin/darwin-installer"
     echo "Nix-Darwin Installed Successfully"
 }
 
