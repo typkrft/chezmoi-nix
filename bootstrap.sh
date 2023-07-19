@@ -21,10 +21,10 @@ done
 
 # TODO: Look for other files related to nix home manager etc
 declare -A SHELLS
-SHELLS[ETC_ZSHRC]=/etc/zshrc
-SHELLS[ETC_BASHRC]=/etc/bashrc
-SHELLS[ETC_BASH]=/etc/bash.bashrc
-SHELLS[ETC_SHELLS]=/etc/shells
+SHELLS[ETC_ZSHRC]='/etc/zshrc'
+SHELLS[ETC_BASHRC]='/etc/bashrc'
+SHELLS[ETC_BASH]='/etc/bash.bashrc'
+SHELLS[ETC_SHELLS]='/etc/shells'
 
 printf "Looking for existing shell configs in /etc/...\n"
 for KEY in "${!SHELLS[@]}"; do
@@ -44,14 +44,20 @@ for KEY in "${!SHELLS[@]}"; do
         printf "Backing up '${SHELLS[$KEY]}.backup-before-nix-darwin' to '${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix-darwin'\n"
         sudo -S mv "${SHELLS[$KEY]}.backup-before-nix-darwin" "${SHELLS[$KEY]}.$TIMESTAMP.backup-before-nix-darwin"
     fi
+
+    # Create Blank files
+    sudo -S touch "/etc/${SHELLS[$KEY]}"
 done
 
-# Install Homebrew
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+declare -A URLS
+URLS[HOMEBREW]='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+URLS[NIX]='https://nixos.org/nix/install'
+URLS[CHEZMOI]='get.chezmoi.io'
 
-# Install Nix
-printf "Starting the nix installation...\n\n"
-sudo -S bash -c "$(curl -sS -L https://nixos.org/nix/install)"
+for KEY in "${!URLS[@]}"; do
+    printf "Starting ${URLS[$KEY]} Installation"
+    bash -ci sudo -S "$(curl -fsSL ${URLS[$KEY]})"
+done
 
 # Fix because sometimes this doesn't happen
 bash -c sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
@@ -62,15 +68,15 @@ bash -c nix-shell -p nix-info --run "nix-info -m"
 
 
 # Install Chezmoi
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init -b $HOME/.local/bin --apply "$CHEZMOI_NIX_REPO"
+# sh -c "$(curl -fsLS get.chezmoi.io)" -- init -b $HOME/.local/bin --apply "$CHEZMOI_NIX_REPO"
 
 # Install darwin-nix
-cd $HOME/.config/nix-darwin/
-bash -c nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-bash -c ./result/bin/darwin-installer
+# cd $HOME/.config/nix-darwin/
+# bash -c nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+# bash -c ./result/bin/darwin-installer
 
 # Install Flake
-bash -c darwin-rebuild switch --flake .#
+# bash -c darwin-rebuild switch --flake .#
 
 
 
