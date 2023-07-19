@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
 check_previous_installs() {
     echo "Checking for previous installations...\n"
