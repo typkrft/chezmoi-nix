@@ -132,10 +132,6 @@ install_nix_darwin() {
         exit 1
     fi
 
-    timestamp=$(date +%s%N)
-    sudo -S mv $files[etc_bashrc] $files[etc_bashrc].before-nix-darwin.$timestamp
-    sudo -S mv $files[etc_zshrc] $files[etc_zshrc].before-nix-darwin.$timestamp
-
     printf "\n\n\n\n\n\n"
     printf "*******************************************************************************************************"
     printf "*******************************************************************************************************"
