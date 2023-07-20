@@ -91,6 +91,13 @@ install_nix() {
 
 install_chezmoi() {
     echo "\n\nInstalling Chezmoi\n"
+
+    if [ -d "$HOME/.local/share/chezmoi" ]; then
+        timestamp=$(date +%s%N)
+        echo "Existing Chezmoi directory found. Backing up to $HOME/.local/share/chezmoi.bak.$timestap"
+        mv "$HOME/.local/share/chezmoi" "$HOME/.local/share/chezmoi.bak.$timestap"
+    fi
+
     echo "$urls[chezmoi]"
     bash -ci "$(curl -fLsS $urls[chezmoi])" -- -b $HOME/.local/bin
     
@@ -138,7 +145,7 @@ install_nix_darwin() {
     printf "*******************************************************************************************************"
     printf "\n\n\n\n\n\n"
 
-    open -a Terminal.app "zsh $HOME/.local/share/chezmoi/scripts/bootsrap/bootstrap-nix-darwin.sh ${dirs[nix_darwin]}"
+    open -a Terminal.app "$HOME/.local/share/chezmoi/scripts/bootstrap/bootstrap-nix-darwin.sh ${dirs[nix_darwin]}"
 
 #     tee "$dirs[nix_darwin].tmp-bootstrap-script.sh" <<-EOF
 #         #!/usr/bin/env zsh
