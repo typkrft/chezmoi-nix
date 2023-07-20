@@ -19,5 +19,38 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 # Workflow
 
 # Useful Commands
+- `nix --extra-experimental-features nix-command store optimise`
+    - Description: ...
+- `nix-collect-garbage -d` && `sudo nix-collect-garbage -d`
+    - Description: ...
+
+# Resources
+## Learning
+- [Nix Cheatsheet](https://cheat.readthedocs.io/en/latest/nixos/nix_lang.html)
+- [Learn X in Y](https://learnxinyminutes.com/docs/nix/)
+- [Nix Pills](https://nixos.org/guides/nix-pills/)
+
+## Documentation
+- [Nix Reference Manual](https://nixos.org/manual/nix/unstable/)
+- [Chezmoi](https://www.chezmoi.io/)
+
+## Packages
+- [Brew Packages](https://formulae.brew.sh)
+- [Nix Packages](https://search.nixos.org/packages)
+
+## Nix Options
+- [Nix-Darwin Opts](https://daiderd.com/nix-darwin/manual/index.html)
+- [Home-Manager Opts](https://nix-community.github.io/home-manager/options.html)
+
+## Posts
+
+## Videos
+
+## Repos
+- [Nix-Darwin](https://github.com/LnL7/nix-darwin/)
+
+## Other Dots
+- [ZMRE](https://github.com/zmre/nix-config/tree/main)
+- [jtojnar](https://github.com/jtojnar/nixfiles/tree/3cfa96d86c2f8241ad693ba4daa45c56b17c4446)
 
 # TODOS
