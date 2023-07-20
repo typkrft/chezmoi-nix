@@ -1,12 +1,9 @@
 #!/usr/bin/env zsh
-path+=('/nix/var/nix/profiles/default/bin')
+# path+=('/nix/var/nix/profiles/default/bin')
 
-(
-    cd $1
-    nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-    ./result/bin/darwin-installer
-    darwin-rebuild switch --flake .#
-)
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer -o "$HOME/.config/nix-darwin/nix-darwin-result"
+"$HOME/.config/nix-darwin/nix-darwin-result/bin/darwin-installer"
+darwin-rebuild switch --flake "$HOME/.config/nix-darwin/.#"
 
 printf '\n\n\n\n\n\n'
 printf '*******************************************************************************************************'

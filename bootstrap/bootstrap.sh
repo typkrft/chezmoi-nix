@@ -145,7 +145,8 @@ install_nix_darwin() {
     printf "*******************************************************************************************************"
     printf "\n\n\n\n\n\n"
 
-    open -a Terminal.app "$HOME/.local/share/chezmoi/scripts/bootstrap/bootstrap-nix-darwin.sh ${dirs[nix_darwin]}"
+    chmod +x "$HOME/.local/share/chezmoi/bootstrap/bootstrap-nix-darwin.sh"
+    open -a Terminal.app "$HOME/.local/share/chezmoi/bootstrap/bootstrap-nix-darwin.sh"
 
 #     tee "$dirs[nix_darwin].tmp-bootstrap-script.sh" <<-EOF
 #         #!/usr/bin/env zsh
@@ -225,11 +226,11 @@ main () {
     )
 
     install_dirs=( "$dirs[chezmoi_source]" "$dirs[nix_store]" "$dirs[nix_darwin]" )
-    check_previous_installs "$install_dirs"
-    backup_create_configs 
-    install_homebrew
-    install_chezmoi
-    install_nix
+    # check_previous_installs "$install_dirs"
+    # backup_create_configs 
+    # install_homebrew
+    # install_chezmoi
+    # install_nix
     install_nix_darwin
 }
 
