@@ -94,8 +94,8 @@ install_chezmoi() {
 
     if [ -d "$HOME/.local/share/chezmoi" ]; then
         timestamp=$(date +%s%N)
-        echo "Existing Chezmoi directory found. Backing up to $HOME/.local/share/chezmoi.bak.$timestap"
-        mv "$HOME/.local/share/chezmoi" "$HOME/.local/share/chezmoi.bak.$timestap"
+        echo "Existing Chezmoi directory found. Backing up to $HOME/.local/share/chezmoi.bak.$timestamp"
+        mv "$HOME/.local/share/chezmoi" "$HOME/.local/share/chezmoi.bak.$timestamp"
     fi
 
     echo "$urls[chezmoi]"
