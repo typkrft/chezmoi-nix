@@ -45,7 +45,7 @@ edit_fstab() {
     timestamp=$(date +%s%N)
     echo "Backing up /etc/fstab to /etc/fstab.before-chezmoi-nix-uninstall.$timestamp"
     sudo -S cp /etc/fstab /etc/fstab.before-chezmoi-nix-uninstall.$timestamp
-    echo "Removing '\nix' partition from '/etc/fstab'"
+    printf "Removing '\%s' partition from '/etc/fstab'" "nix"
     sudo -S sed -i '' -e '/\/nix/d' /etc/fstab
 }
 
