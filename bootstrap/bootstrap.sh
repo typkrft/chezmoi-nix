@@ -1,5 +1,11 @@
 #!/usr/bin/env zsh
 
+
+# NOTE: Run with zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/bootstrap.sh)
+
+# TODO: Clean up messages 
+
+
 check_previous_installs() {
     echo "Checking for previous installations...\n"
     for directory in $1; do
@@ -116,82 +122,35 @@ install_chezmoi() {
 
 
 install_nix_darwin() {
-    echo "\n\nInstalling Nix-Darwin\n"
+    echo "INFO: $(date +"%D %T"): Installing Nix-Darwin"
        
-    if [[ ! -d "$dirs[nix_darwin]" ]]; then
+    [[ ! -d "$dirs[nix_darwin]" ]]; then
         mkdir -p "$dirs[nix_darwin]"
     fi
 
-    (
-        cd "$dirs[nix_darwin]" 
-        git init
-        git add -A
-    )
+    ( cd "$dirs[nix_darwin]"; git init; git add -A )
     if [ $? -ne 0 ]; then
-        echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
+        echo "ERROR: $(date +"%D %T"): Installation of Nix-Darwin failed. Exiting"
         exit 1
     fi
 
-    printf "\n\n\n\n\n\n"
-    printf "*******************************************************************************************************"
-    printf "*******************************************************************************************************"
-    printf "***********             THIS INSTALLATION WILL CONTINUE IN A NEW TERMINAL WINDOW           ************"
-    printf "** Please follow the instructions there and wait for the terminal to exit before closing this window **"
-    printf "*******************************************************************************************************"
-    printf "*******************************************************************************************************"
-    printf "\n\n\n\n\n\n"
+    cat <<EOF
+
+
+*******************************************************************************************************
+*******************************************************************************************************
+**                                                                                                   **
+**                      THIS INSTALLATION WILL CONTINUE IN A NEW TERMINAL WINDOW                     **
+** Please follow the instructions there and wait for the terminal to exit before closing this window **
+**                                                                                                   **
+*******************************************************************************************************
+*******************************************************************************************************
+
+
+EOF
 
     chmod +x "$HOME/.local/share/chezmoi/bootstrap/bootstrap-nix-darwin.sh"
     open -a Terminal.app "$HOME/.local/share/chezmoi/bootstrap/bootstrap-nix-darwin.sh"
-
-#     tee "$dirs[nix_darwin].tmp-bootstrap-script.sh" <<-EOF
-#         #!/usr/bin/env zsh
-
-#         path+=('/nix/var/nix/profiles/default/bin')
-#         cd  "${dirs[nix_darwin]}"
-
-#         nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-#         ./result/bin/darwin-installer
-
-#         darwin-rebuild switch --flake .#
-
-#         printf '\n\n\n\n\n\n'
-#         printf '*******************************************************************************************************'
-#         printf '*******************************************************************************************************'
-#         printf '***********                             BOOTSTRAP COMPLETE                                 ************'
-#         printf '***********                   You should now close any open terminals                      ************'
-#         printf '*******************************************************************************************************'
-#         printf '*******************************************************************************************************'
-#         printf '\n\n\n\n\n\n'
-        
-#         rm "${dirs[nix_darwin]}.tmp-bootstrap-script.sh"
-# EOF
-#     chmod +x "$dirs[nix_darwin].tmp-bootstrap-script.sh"
-#     open -a Terminal.app "$dirs[nix_darwin].tmp-bootstrap-script.sh"
-
-# #     osascript  - "$dirs[nix_darwin]" <<EOF
-# #     on run argv
-# #         tell application "Terminal"
-# #             launch
-# #             activate
-# #             do script ("
-# #                 path+=('/nix/var/nix/profiles/default/bin')
-# #                 cd " & quoted form of item 1 of argv & " 
-# #                 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-# #                 ./result/bin/darwin-installer
-# #                 darwin-rebuild switch --flake .#
-# #                 printf '\n\n\n\n\n\n'
-# #                 printf '*******************************************************************************************************'
-# #                 printf '*******************************************************************************************************'
-# #                 printf '***********                             BOOTSTRAP COMPLETE                                 ************'
-# #                 printf '***********                   You should now close any open terminals                      ************'
-# #                 printf '*******************************************************************************************************'
-# #                 printf '*******************************************************************************************************'
-# #                 printf '\n\n\n\n\n\n'
-# #             ")
-# #         end tell 
-# #     end
-# # EOF
 }
 
 
@@ -232,5 +191,3 @@ main () {
 
 
 main
-
-# NOTE:  Run with zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap.sh)

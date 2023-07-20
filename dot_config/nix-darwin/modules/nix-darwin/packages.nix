@@ -53,7 +53,7 @@
     # NOTE: Casks are prefered because of weird placement of GUI Apps by Nix / Nix Darwin
     casks = [
       "alfred"
-      "authy"
+      # "authy" #! incorrect version currently tagged pr to fix already
       "betterdiscord-installer"
       "caffeine"
       "discord"
@@ -61,6 +61,7 @@
       "firefox-developer-edition"
       "kitty"
       "libreoffice"
+      "obsidian"
       "visual-studio-code"
       "vivaldi"
     ];

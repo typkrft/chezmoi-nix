@@ -1,21 +1,34 @@
 #!/usr/bin/env zsh
 
+# The new terminal must source the shell config nix created, and then it needs to be removed for nix-darwin
 timestamp=$(date +%s%N)
 sudo -S mv /etc/bashrc "/etc/bashrc.before-nix-darwin.$timestamp"
 sudo -S mv /etc/zshrc "/etc/zshrc.before-nix-darwin.$timestamp"
 sudo -S mv /etc/shells "/etc/shells.before-nix-darwin.$timestamp"
 
-
-# nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer -o "$HOME/.config/nix-darwin/nix-darwin-result"
-# "$HOME/.config/nix-darwin/nix-darwin-result/bin/darwin-installer"
+# Book Strap Flake
 nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake "$HOME/.config/nix-darwin/.#"
 
+if [[ ! -z "$(\ls -A $HOME/.local/share/chezmoi/bootstrap/run)" ]]; then
+    echo "Running Post Nix-Darwin Configurations"
 
-printf '\n\n\n\n\n\n'
-printf '*******************************************************************************************************'
-printf '*******************************************************************************************************'
-printf '***********                             BOOTSTRAP COMPLETE                                 ************'
-printf '***********                   You should now close any open terminals                      ************'
-printf '*******************************************************************************************************'
-printf '*******************************************************************************************************'
-printf '\n\n\n\n\n\n'
+    for file in "$HOME/.local/share/chezmoi/bootstrap/run/**/*(.)"; do 
+        echo "Running $file"
+        zsh $file
+    done
+fi
+
+cat <<EOF
+
+
+*******************************************************************************************************
+*******************************************************************************************************
+**                                                                                                   **
+**                                      BOOTSTRAP COMPLETE                                           **
+**                                You can close your terminal now                                    **
+**                                                                                                   **
+*******************************************************************************************************
+*******************************************************************************************************
+
+
+EOF
