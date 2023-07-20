@@ -1,4 +1,4 @@
-*/result        # ignore nix result symlink directories
-*/.git          # ignore git directories 
-*/.gitignore    # ignore .gitignore
-bootstrap.sh    # don't link bootstrap
+*/result
+*/.git
+*/.gitignore
+scripts/bootstrap
