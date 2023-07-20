@@ -74,7 +74,7 @@ rm_system_files() {
 
     for file in "$nix_system_files"; do 
         echo "Removing '$file'"
-        sudo -S unlink "$file" || sudo -S rm -rf "$file"
+        sudo -S rm -rf "$file" || sudo -S unlink "$file" 
     done
 }
 
