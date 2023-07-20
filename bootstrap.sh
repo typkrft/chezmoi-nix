@@ -39,7 +39,7 @@ backup_create_configs() {
         fi
 
         echo "Creating $file\n"
-        sudo -S >$file
+        sudo -S touch $file
 
     done
 }
