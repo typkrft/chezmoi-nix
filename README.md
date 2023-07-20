@@ -6,12 +6,17 @@ While this configuration, in it's current itteration, is currently tailored to m
 
 ___
 <h1 style='color: red;'>Get Psyched!</h1>
->[!info] If you have existing installations of Homebrew, Chezmoi, or Nix it's a good idea to backup and remove them before continuing.
+{% warning %}
+**NOTE:** If you have existing installations of Homebrew, Chezmoi, or Nix it's a good idea to backup and remove them before continuing.
+{% endwarning %}
 
->[!example] Bootstrap Nix
->```shell
-> zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/bootstrap.sh)
->```
+{% note %}
+Bootstrap Nix
+```shell
+ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/bootstrap.sh)
+```
+{% endnote %}
+
 ---
 # Workflow
 
