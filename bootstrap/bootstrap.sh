@@ -226,11 +226,11 @@ main () {
     )
 
     install_dirs=( "$dirs[chezmoi_source]" "$dirs[nix_store]" "$dirs[nix_darwin]" )
-    # check_previous_installs "$install_dirs"
-    # backup_create_configs 
-    # install_homebrew
-    # install_chezmoi
-    # install_nix
+    check_previous_installs "$install_dirs"
+    backup_create_configs 
+    install_homebrew
+    install_chezmoi
+    install_nix
     install_nix_darwin
 }
 
