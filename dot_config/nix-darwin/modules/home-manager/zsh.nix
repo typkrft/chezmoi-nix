@@ -1,4 +1,17 @@
 { pkgs, ... }: {
+  home = {
+    sessionPath = [ "$HOME/.local/bin" ];
+    
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
+
+    shellAliases = {
+      dots = "chezmoi cd; code .";
+      u-nix = "chezmoi apply -v && darwin-rebuild switch --flake $HOME/.config/nix-darwin/.#";
+    };
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -28,6 +41,10 @@
       save = 100000;
       size = 100000;
       share = true;
+    };
+
+    historySubstringSearch = {
+      enable = true;
     };
 
   };
