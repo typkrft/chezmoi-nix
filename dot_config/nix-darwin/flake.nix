@@ -18,7 +18,7 @@
   };
 
   # the `= inputs:` just allows us to pass any of the inputs into the outputs section
-  outputs = inputs@{ self, nixpkgs, home-manager, darwin, nix-vars, agenix, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, darwin, nix-vars, ... }: {
     # Nix Configuration
     system.stateVersion = 23.11; # Esnure compatability with this version of nixos
     nix.extraOptions = "experimental-features = nix-command flakes"; # Add flakes to the default nix command # TODO not working
@@ -33,7 +33,7 @@
       system = "aarch64-darwin";
       
       # Inherit inputs
-      specialArgs = { inherit inputs nix-vars agenix; };
+      specialArgs = { inherit inputs nix-vars; };
       
       # services.nix-daemon.enable = true; # needed because macOS is a multi-user install
       pkgs = import nixpkgs {
@@ -50,19 +50,17 @@
         ./modules/nix-darwin/keyboard.nix
         ./modules/nix-darwin/skhd.nix
         ./modules/nix-darwin/shell.nix
-        agenix.nixosModules.default
 
         home-manager.darwinModules.home-manager {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users."${nix-vars.username}" = { nix-vars, config, pkgs, lib, ... }: {
+            users."${nix-vars.username}" = { nix-vars, config, pkgs, ... }: {
               imports = [
                 ./modules/home-manager/defaults.nix
                 ./modules/home-manager/zsh.nix
                 ./modules/home-manager/kitty.nix
                 ./modules/home-manager/navi.nix
-                agenix.homeManagerModules.default
               ];
             };
             extraSpecialArgs = { inherit nix-vars; };

@@ -120,44 +120,67 @@ install_nix_darwin() {
         exit 1
     fi
 
+    timestamp=$(date +%s%N)
+    sudo -S mv $files[etc_bashrc] $files[etc_bashrc].before-nix-darwin.$timestamp
+    sudo -S mv $files[etc_zshrc] $files[etc_zshrc].before-nix-darwin.$timestamp
 
-    osascript  - "$dirs[nix_darwin]" <<EOF
-    on run argv
-        tell application "Terminal"
-            do script ("
-                path+=('/nix/var/nix/profiles/default/bin')
-                cd " & quoted form of item 1 of argv & "
-                nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-                ./result/bin/darwin-installer
-            ")
-        end tell 
-    end
+    printf "\n\n\n\n\n\n"
+    printf "*******************************************************************************************************"
+    printf "*******************************************************************************************************"
+    printf "***********             THIS INSTALLATION WILL CONTINUE IN A NEW TERMINAL WINDOW           ************"
+    printf "** Please follow the instructions there and wait for the terminal to exit before closing this window **"
+    printf "*******************************************************************************************************"
+    printf "*******************************************************************************************************"
+    printf "\n\n\n\n\n\n"
+
+    tee "$dirs[nix_darwin].tmp-bootstrap-script.sh" <<-EOF
+        #!/usr/bin/env zsh
+
+        path+=('/nix/var/nix/profiles/default/bin')
+        cd  "${dirs[nix_darwin]}"
+
+        nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+        ./result/bin/darwin-installer
+
+        darwin-rebuild switch --flake .#
+
+        printf '\n\n\n\n\n\n'
+        printf '*******************************************************************************************************'
+        printf '*******************************************************************************************************'
+        printf '***********                             BOOTSTRAP COMPLETE                                 ************'
+        printf '***********                   You should now close any open terminals                      ************'
+        printf '*******************************************************************************************************'
+        printf '*******************************************************************************************************'
+        printf '\n\n\n\n\n\n'
+        
+        rm "${dirs[nix_darwin]}.tmp-bootstrap-script.sh"
 EOF
+    chmod +x "$dirs[nix_darwin].tmp-bootstrap-script.sh"
+    open -a Terminal.app "$dirs[nix_darwin].tmp-bootstrap-script.sh"
 
-    
-    # # (
-    # source /etc/zshrc
-    # path+=('/nix/var/nix/profiles/default/bin')
-    # NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
-    # sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
-    # sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
-
-    # cd "$dirs[nix_darwin]" 
-    # nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-    # ./result/bin/darwin-installer
-    # # )
-    if [ $? -ne 0 ]; then
-        echo "\n\nInstallation of Nix-Darwin failed. Exiting\n"
-        exit 1
-    fi
-    
-    echo "\n\nNix-Darwin Installed Successfully\n"
-}
-
-
-install_flake() {
-    echo "\n\nInstalling Nix-Darwin Flake\n"
-    nix-darwin -- switch --flake "$dirs[nix_darwin]/.#"
+#     osascript  - "$dirs[nix_darwin]" <<EOF
+#     on run argv
+#         tell application "Terminal"
+#             launch
+#             activate
+#             do script ("
+#                 path+=('/nix/var/nix/profiles/default/bin')
+#                 cd " & quoted form of item 1 of argv & " 
+#                 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+#                 ./result/bin/darwin-installer
+#                 darwin-rebuild switch --flake .#
+#                 printf '\n\n\n\n\n\n'
+#                 printf '*******************************************************************************************************'
+#                 printf '*******************************************************************************************************'
+#                 printf '***********                             BOOTSTRAP COMPLETE                                 ************'
+#                 printf '***********                   You should now close any open terminals                      ************'
+#                 printf '*******************************************************************************************************'
+#                 printf '*******************************************************************************************************'
+#                 printf '\n\n\n\n\n\n'
+#             ")
+#         end tell 
+#     end
+# EOF
 }
 
 
@@ -194,9 +217,6 @@ main () {
     install_chezmoi
     install_nix
     install_nix_darwin
-    install_flake
-
-    echo "\n\nBootstrap Complete\n"
 }
 
 

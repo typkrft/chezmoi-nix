@@ -1,4 +1,4 @@
-{ pkgs, nix-vars, agenix, ... }: {
+{ pkgs, nix-vars, ... }: {
   # System Wide
   environment.systemPackages = with pkgs; [
     coreutils
@@ -7,7 +7,6 @@
     gnused
     neovim
     ripgrep
-    agenix.packages."${system}".default
   ];
 
   # User

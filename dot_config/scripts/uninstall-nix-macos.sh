@@ -11,6 +11,17 @@ backup_etc_configs() {
 }
 
 
+uninstall_nix_darwin() {
+    if ! command -v darwin-rebuild &> /dev/null; then
+        return 0
+    fi
+
+    nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A uninstaller
+    ./result/bin/darwin-uninstaller 
+    rm -rf ./result
+}
+
+
 rm_daemons() {
     echo "Removing Launch Daemons and Services"
     sudo -S launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist
@@ -53,9 +64,12 @@ rm_system_files() {
         '/var/root/.nix-profile'
         '/var/root/.nix-defexpr'
         '/var/root/.nix-channels' 
+        "$HOME/.config/nix-darwin"
         "$HOME/.nix-profile"
         "$HOME/.nix-defexpr"
         "$HOME/.nix-channels"
+        "$HOME/.local/state/nix"
+        "$HOME/.local/state/home-manager"
     )
 
     for file in "$nix_system_files"; do 
@@ -67,7 +81,7 @@ rm_system_files() {
 
 rm_partition() {
     echo "Removing the '/nix' partition"
-    sudo -S diskutil apfs deleteVolume /nix
+    sudo -S /usr/sbin/diskutil apfs deleteVolume /nix
 }
 
 
@@ -94,7 +108,6 @@ main() {
     rm_partition
 
     printf "Nix has been uninstalled. Partition /%s will appear until you reboot." 'nix'
-
 }
 
 main
