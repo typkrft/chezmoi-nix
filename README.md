@@ -11,6 +11,7 @@ ___
 **WARNING: If you have existing installations** of **Homebrew**, **Chezmoi**, or **Nix** it's a good idea to **backup and remove them** before continuing.
 
 **Bootstrap Nix**
+
 This will install Homebrew, Chezmoi, The Nix Package Manager, nix-darwin, and home-manager. There will be prompts. The installation process also requires opening a new shell, or more likely properly sourcing various things, so it will open a second Apple Terminal window to complete the installation after nix is installed. 
 ```shell
 zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/bootstrap.sh)
