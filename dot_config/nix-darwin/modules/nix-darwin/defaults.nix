@@ -28,12 +28,40 @@
       FXEnableExtensionChangeWarning = false;
       FXPreferredViewStyle = "clmv";
     };
+    
 
     ".GlobalPreferences"."com.apple.sound.beep.sound" = "/System/Library/Sounds/hero";
 
     screencapture = {
       disable-shadow = true;
       location = "~/Downloads/Screenshots";
+    };
+
+    CustomUserPreferences = {
+      "com.apple.print.PrintingPrefs" = { "Quit When Finished" = true; }; # quit printer app once jobs complete
+      "com.apple.AdLib" = { allowApplePersonalizedAdvertising = false; };
+      
+      "com.apple.SoftwareUpdate" = {
+        AutomaticCheckEnabled = true;
+        # Check for software updates daily, not just once per week
+        ScheduleFrequency = 1;
+        # Download newly available updates in background
+        AutomaticDownload = 1;
+        # Install System data files & security updates
+        CriticalUpdateInstall = 1;
+      };
+      
+      "com.apple.desktopservices" = {
+          # Avoid creating .DS_Store files on network or USB volumes
+          DSDontWriteNetworkStores = true;
+          DSDontWriteUSBStores = true;
+        };
+
+      "com.apple.screensaver" = {
+          # Require password immediately after sleep or screen saver begins
+          askForPassword = 1;
+          askForPasswordDelay = 0;
+        };
     };
 
     NSGlobalDomain = {

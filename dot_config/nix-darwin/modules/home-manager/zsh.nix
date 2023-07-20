@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   home = {
-    sessionPath = [ "$HOME/.local/bin" ];
+    sessionPath = [ "~/.local/bin" ];
     
     sessionVariables = {
       EDITOR = "nvim";
