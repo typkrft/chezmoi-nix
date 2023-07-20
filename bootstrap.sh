@@ -18,6 +18,11 @@ backup_create_configs() {
     for file in "${(v)files[@]}"; do
         timestamp=$(date +%s%N)
 
+        if [ -L "$file" ]; then
+            echo "$file is a symbolic link not a file. Unlinking"
+            sudo -S unlink "$file" || sudo -S rm "$file"
+        fi
+
         if [ -f "$file" ]; then
             echo "Moving '$file' to '$file.before-chezmoi-nix.$timestamp'\n"
             sudo -S mv "$file" "$file.before-chezmoi-nix.$timestamp"
@@ -39,7 +44,7 @@ backup_create_configs() {
         fi
 
         echo "Creating $file\n"
-        sudo -S touch $file
+        sudo -S touch "$file"
 
     done
 }
