@@ -11,6 +11,7 @@ ___
 **WARNING: If you have existing installations** of **Homebrew**, **Chezmoi**, or **Nix** it's a good idea to **backup and remove them** before continuing.
 
 **Bootstrap Nix**
+This will install Homebrew, Chezmoi, The Nix Package Manager, nix-darwin, and home-manager. There will be prompts. The installation process also requires opening a new shell, or more likely properly sourcing various things, so it will open a second Apple Terminal window to complete the installation after nix is installed. 
 ```shell
 zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/bootstrap.sh)
 ```
@@ -84,7 +85,7 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 # Issues
 ## But first, a rant. 
 
-There be dragons and your sword is drenched in poison. Make sure you don't drop it on your foot. For all of Nix's power and usefulness is a double-edge sword. Nix is a nightmare to troubleshoot and debug. It's language is terse with poorly described lambdas abound. Errors messages are cryptic. And navigating even to the path of a particular file to research something can be a chore. A single problem with a module, flake, derivation, etc can bork your entire configuration. That's just part of the territory when you are building software with this level of reproducibility. Let's just say there are reasons that companies are starting to pick up nix and there are also a reasons those companies are paying the people that manage it, often, more than their own developers.
+There be dragons here and your sword is drenched in poison. Make sure you don't drop it on your foot. For all of Nix's power and usefulness is a double-edge sword. Nix is a nightmare to troubleshoot and debug. It's language is terse with poorly described lambdas abound. Errors messages are cryptic. And navigating even to the path of a particular file to research something can be a chore. A single problem with a module, flake, derivation, etc can bork your entire configuration. That's just part of the territory when you are building software with this level of reproducibility. Let's just say there are reasons that companies are starting to pick up nix and there are also a reasons those companies are paying the people that manage it, often, more than their own developers.
 
 **Example: Trace Output**
 ```nix
