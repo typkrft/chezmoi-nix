@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 timestamp=$(date +%s%N)
-sudo -S mv $files[etc_bashrc] $files[etc_bashrc].before-nix-darwin.$timestamp
-sudo -S mv $files[etc_zshrc] $files[etc_zshrc].before-nix-darwin.$timestamp
+sudo -S mv /etc/bashrc "/etc/bashrc.before-nix-darwin.$timestamp"
+sudo -S mv /etc/zshrc "/etc/zshrc.before-nix-darwin.$timestamp"
 
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer -o "$HOME/.config/nix-darwin/nix-darwin-result"
 "$HOME/.config/nix-darwin/nix-darwin-result/bin/darwin-installer"
