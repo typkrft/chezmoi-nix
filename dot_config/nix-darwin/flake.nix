@@ -13,6 +13,9 @@
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    # VS Code Extensions
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
     # Variables
     nix-vars.url = "path:./modules/inputs/nix-vars";
   };
@@ -40,6 +43,7 @@
         system = "aarch64-darwin";
         config.allowUnfree = true;
         config.input-fonts.acceptLicense = true;
+        overlays = [ inputs.nix-vscode-extensions.overlays.default ];
       };
 
       modules = [
@@ -61,6 +65,8 @@
                 ./modules/home-manager/zsh.nix
                 ./modules/home-manager/kitty.nix
                 ./modules/home-manager/navi.nix
+                ./modules/home-manager/firefox.nix
+                ./modules/home-manager/vscode.nix
               ];
             };
             extraSpecialArgs = { inherit nix-vars; };
