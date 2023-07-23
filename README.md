@@ -83,6 +83,10 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 - [jtojnar](https://github.com/jtojnar/nixfiles/tree/3cfa96d86c2f8241ad693ba4daa45c56b17c4446)
 
 
+## Misc.
+- [Nerd Fonts Symbol Search](https://www.nerdfonts.com/cheat-sheet)
+- [MacOS Hex Keycodes](https://gist.github.com/eegrok/949034)
+
 # Issues
 ## But first, a rant. 
 

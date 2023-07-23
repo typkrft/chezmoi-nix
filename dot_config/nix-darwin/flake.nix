@@ -67,6 +67,8 @@
                 ./modules/home-manager/navi.nix
                 ./modules/home-manager/firefox.nix
                 ./modules/home-manager/vscode.nix
+                ./modules/home-manager/tmux.nix
+                ./modules/home-manager/zellij.nix
               ];
             };
             extraSpecialArgs = { inherit nix-vars; };

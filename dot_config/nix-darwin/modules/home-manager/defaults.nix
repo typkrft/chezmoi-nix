@@ -76,30 +76,4 @@
       "-G"
     ];
   };
-
-  programs.zellij = {
-    enable = true;
-    enableZshIntegration = true;
-    
-    settings = {
-      # simplified_ui = flase;
-      pane_frames = false;
-      theme = "dracula";
-      ui.pane_frame.rounded_corners = false;
-
-      #! https://github.com/nix-community/home-manager/issues/4054
-      # NOTE: Alternative link to file eg: home.file.".config/zellij/config.kdl".source = ./config.kdl;
-      # keybinds = {
-      #   normal = {
-      #     bind = [
-      #       {
-      #         _args = [ "Ctrl k = Clear;" ];
-      #       }
-      #     ];
-      #   };
-      # };
-    };
-    
-  };
-
 }

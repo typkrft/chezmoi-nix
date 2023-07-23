@@ -4,7 +4,7 @@
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
     package = pkgs.runCommand "vscode-0.0.0" { 
-      version = "1.8.0";
+      version = "1.8.1";
       pname = "vscode";
     } "mkdir $out";
 
@@ -55,6 +55,11 @@
   home.file."Library/Application Support/Code/User/settings.json" = {
     enable = true;
     text = builtins.toJSON {
+      "editor.fontFamily" = "Iosevka Nerd Font";
+      "editor.fontLigatures" = true;
+      "window.restoreWindows" = "all";
+      "files.autoSave" = "afterDelay";
+      "files.hotExit" = "onExitAndWindowClose";
       "workbench.colorTheme" = "Dracula";
       "dashyeah.title" = "Projects";
       "dashyeah.debug" = false;
@@ -66,9 +71,28 @@
               "icon" = "codicon-folder";
               "accent" = "#dc143c";
           }
+          {
+              "id" = "832c2a3e-38e1-4729-bba3-361824001bf7";
+              "name" = "bartender";
+              "path" = "file:///Users/brandon/Code/Work/bartender";
+              "icon" = "codicon-folder";
+              "accent" = "#dc143c";
+          }
+          {
+              "id" = "3b1959a2-b19f-4652-89b8-1360d3f4a2ec";
+              "name" = "temp bartender";
+              "path" = "file:///Users/brandon/Code/Work/temp_rewrite_bartender";
+              "icon" = "codicon-folder";
+              "accent" = "#dc143c";
+          }
       ];
       "dashyeah.folderSizing" = "col-12";
+      
       "[jsonc]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      
+      "[javascript]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
     };

@@ -49,8 +49,10 @@
       # Bind Keys
       bindkey '^[[A' history-beginning-search-backward
       bindkey '^[[B' history-beginning-search-forward
-      bindkey '^[[1;9D'  beginning-of-line
-      bindkey '^[[1;9C'  end-of-line
+
+
+      bindkey '⌥<-' backward-word
+      bindkey '⌥->' forward-word
 
       # Autols
       function report() {
