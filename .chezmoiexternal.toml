@@ -1,0 +1,4 @@
+[".config/nix-darwin/private"]
+    type = "git-repo"
+    url = "https://github.com/typkrft/chezmoi-nix-private.git"
+    refreshPeriod = "24h"

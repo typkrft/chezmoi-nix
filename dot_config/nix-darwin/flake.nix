@@ -75,7 +75,7 @@
                 ./modules/home-manager/vscode.nix
                 ./modules/home-manager/tmux.nix
                 ./modules/home-manager/zellij.nix
-                ./modules/home-manager/ssh.nix
+                ./private/ssh/nix/ssh.nix
               ];
             };
             extraSpecialArgs = { inherit nix-vars; };
