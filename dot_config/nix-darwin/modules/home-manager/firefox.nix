@@ -59,7 +59,8 @@ home.file."Library/Application Support/Firefox/Profiles/ff-nix/extensions/snooze
       stylus
       enhancer-for-youtube
       decentraleyes
-      # TODO: Download xpis manually
+
+      # TODO Follow up on https://gitlab.com/rycee/nur-expressions/-/issues/139
       # theatermode
       # Wikiwand
       # Alfred Integration

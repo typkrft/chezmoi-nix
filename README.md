@@ -140,7 +140,10 @@ How in the fuck do you evaluate definitions in an `<unknown-file>`? This is just
     ```
 
 # TODOS
-
+- [ ] Setup Bootstrap to properly pull and init submodule https://www.taniarascia.com/git-submodules-private-content/
+- [ ] Bootstrap adding keys to agents if not already
+- [ ] Bootstrap Digital Certificates
+- [ ] Submodules for work repos
 
 # Thanks
 Patrick Walsh aka PWalsh aka ZMRE. He makes a lot of great security and nix related content. His Darwin Nix youtube video has heavily inspired my configuration. 
