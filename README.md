@@ -144,6 +144,8 @@ How in the fuck do you evaluate definitions in an `<unknown-file>`? This is just
 - [ ] Bootstrap adding keys to agents if not already
 - [ ] Bootstrap Digital Certificates
 - [ ] Submodules for work repos
+- [ ] Fix ZSH cmd + backspace killing whole line not back from cursor
+- [ ] rm ds_store command to zsh aliases
 
 # Thanks
 Patrick Walsh aka PWalsh aka ZMRE. He makes a lot of great security and nix related content. His Darwin Nix youtube video has heavily inspired my configuration. 
