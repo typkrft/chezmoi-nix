@@ -1,13 +1,13 @@
 { pkgs, ... }: {
 
   # Additional Extensions
-home.file."Library/Application Support/Firefox/Profiles/ff-nix/extensions/snoozetabs-1.1.1.xpi" = {
-  enable = true;
-  source = pkgs.fetchurl {
-    url = "https://addons.mozilla.org/firefox/downloads/file/1209734/snoozetabs-1.1.1.xpi";
-    sha256 = "sha256-sSc6uDCa8ISxd/cdPnlN4yrCtmPnDXbBImDRgFuc1io=";
+  home.file."Library/Application Support/Firefox/Profiles/ff-nix/extensions/snoozetabs-1.1.1.xpi" = {
+    enable = true;
+    source = pkgs.fetchurl {
+      url = "https://addons.mozilla.org/firefox/downloads/file/1209734/snoozetabs-1.1.1.xpi";
+      sha256 = "sha256-sSc6uDCa8ISxd/cdPnlN4yrCtmPnDXbBImDRgFuc1io=";
+    };
   };
-};
 
   # TODO: Fork karamanliev/cascade add Tab Center Reborn Setup here https://github.com/andreasgrafen/cascade#how-to-set-it-up-1
   home.file."Library/Application Support/Firefox/Profiles/ff-nix/chrome/userChrome.css" = {
@@ -15,7 +15,7 @@ home.file."Library/Application Support/Firefox/Profiles/ff-nix/extensions/snooze
     recursive = true;
     source = pkgs.fetchgit {
       url = "https://github.com/karamanliev/cascade.git";
-      sparseCheckout = [ 
+      sparseCheckout = [
         "chrome/userChrome.css"
       ];
       sha256 = "sha256-HcP9ubL6Omu8GbeFq3namDR6EMKpXm8uMD57/J5/9C0=";
@@ -26,7 +26,7 @@ home.file."Library/Application Support/Firefox/Profiles/ff-nix/extensions/snooze
     recursive = true;
     source = pkgs.fetchgit {
       url = "https://github.com/karamanliev/cascade.git";
-      sparseCheckout = [ 
+      sparseCheckout = [
         "chrome/includes"
       ];
       sha256 = "sha256-znnpv+6IoEl9eEFmY5ilUvmEd4nx+DxBL/mSoOyUaLk=";
@@ -59,19 +59,18 @@ home.file."Library/Application Support/Firefox/Profiles/ff-nix/extensions/snooze
       stylus
       enhancer-for-youtube
       decentraleyes
-
-      # TODO Follow up on https://gitlab.com/rycee/nur-expressions/-/issues/139
-      # theatermode
-      # Wikiwand
-      # Alfred Integration
-      # omni
-      # Snooze Tab
-      # FoxyTab
-      # Linkding
-      # ng-inspect
+      alfred-launcher-integration
+      foxytab
+      linkding-extension
+      ng-inspect
+      omnisearch
+      snoozetabs
+      theater-mode-for-youtube
+      wikiwand-wikipedia-modernized
     ];
 
 
+    # TODO: Get a list of options
     settings = {
       "app.update.auto" = false;
       #   "browser.startup.homepage" = "https://lobste.rs";

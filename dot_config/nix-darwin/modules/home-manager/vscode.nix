@@ -141,10 +141,11 @@
           "italic" = false;
         }
       ];
-      
+
       "debug.console.fontSize" = 14;
       "terminal.integrated.fontSize" = 14;
-      
+      "shellcheck.exclude" = [ "SC1071" ];
+
       "editor.fontFamily" = "Iosevka Nerd Font";
       "editor.fontLigatures" = true;
       "editor.fontSize" = 14;
@@ -163,6 +164,12 @@
 
       "workbench.iconTheme" = "bearded-icons";
       "todo-tree.highlights.enabled" = false;
+      "[markdown]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[yaml]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
     };
   };
 }

@@ -17,6 +17,7 @@
       pip = "noglob pip";
       cat = "bat";
       rm = "trash --trash-dir=$HOME/.Trash";
+      rmds  = "find . -name '. DS_Store' -type f -delete";
     };
   };
 
@@ -38,6 +39,9 @@
     '';
 
     initExtra = ''
+      # Completion
+      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
       # fzf-tab
       zstyle ':completion:*:git-checkout:*' sort false
       zstyle ':completion:*:descriptions' format '[%d]'
@@ -48,10 +52,12 @@
       # Bind Keys
       bindkey '^[[A' history-beginning-search-backward
       bindkey '^[[B' history-beginning-search-forward
-
       bindkey '⌥<-' backward-word
       bindkey '⌥->' forward-word
-
+      bindkey '⌘⌫' backward-kill-line
+      bindkey '⌘z' undo
+      bindkey '⌘⇪z' redo
+      
       # Autols
       function report() {
         DIRS=$(find . -mindepth 1 -maxdepth 1 -type d | wc -l)
@@ -109,9 +115,9 @@
       share = true;
     };
 
-    # historySubstringSearch = {
-    #   enable = true;
-    # };
+    historySubstringSearch = {
+      enable = true;
+    };
 
     plugins = [
       {
@@ -154,7 +160,14 @@
           sha256 = "sha256-PXHxPxFeoYXYMOC29YQKDdMnqTO0toyA7eJTSCV6PGE=";
         };
       }
+      {
+        name = "zsh-autosuggestions";
+        file = "zsh-autosuggestions.zsh";
+        src = pkgs.fetchgit {
+          url = "https://github.com/zsh-users/zsh-autosuggestions";
+          sha256 = "sha256-KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
+        };
+      }
     ];
-
   };
 }

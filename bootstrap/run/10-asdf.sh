@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-python_vers=3.11.4
-nodejs_vers=20.4.0
+python_vers='3.11.4'
+nodejs_vers='20.4.0'
 
 asdf plugin-add python 
 asdf install python "$python_vers"

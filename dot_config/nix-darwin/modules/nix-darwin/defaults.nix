@@ -17,7 +17,17 @@
     };
   };
 
-  programs.zsh.enable = true; # Lose important Nix Paths if disabled
+  programs = {
+    zsh.enable = true; # Lose important Nix Paths if disabled
+    nix-index.enable = true;
+  };
+
+  networking = {
+    dns = [
+      "10.10.10.3"
+      "10.10.10.21"
+    ];
+  };
 
   users.users."${nix-vars.username}".home = "/Users/${nix-vars.username}"; # Avoid /var/empty warnings/errors  
   # macOS Defaults
@@ -42,6 +52,7 @@
       FXDefaultSearchScope = "SCcf";
       FXEnableExtensionChangeWarning = false;
       FXPreferredViewStyle = "clmv";
+      ShowPathbar = true;
     };
 
 
@@ -79,6 +90,10 @@
       };
     };
 
+    trackpad = {
+      TrackpadThreeFingerDrag = true; # TODO is this working
+    };
+
     NSGlobalDomain = {
       _HIHideMenuBar = true;
       "com.apple.swipescrolldirection" = true;
@@ -87,9 +102,13 @@
       AppleKeyboardUIMode = 3;
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
+      AppleShowScrollBars = "WhenScrolling";
       NSNavPanelExpandedStateForSaveMode = true;
       NSNavPanelExpandedStateForSaveMode2 = true;
       "com.apple.trackpad.scaling" = 2.4;
+      AppleWindowTabbingMode = "fullscreen";
+      PMPrintingExpandedStateForPrint = true;
+      PMPrintingExpandedStateForPrint2 = true;
     };
   };
 }

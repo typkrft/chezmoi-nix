@@ -3,18 +3,18 @@
     enable = true;
     package = pkgs.runCommand "kitty-0.0.0" { } "mkdir $out";
     theme = nix-vars.themes.kittyTheme;
-    shellIntegration.enableZshIntegration = true; 
-    
+    shellIntegration.enableZshIntegration = true;
+
     darwinLaunchOptions = [
       "--single-instance"
       "--listen-on=unix:/tmp/kitty-socket"
     ];
-    
+
     font = {
       name = nix-vars.themes.font; #+ "Mono";
       size = 16;
-    }; 
-    
+    };
+
     settings = {
       scrollback_lines = 10000;
       tab_bar_edge = "bottom";
@@ -32,15 +32,18 @@
 
     # kitty +kitten show_key
     extraConfig = ''
-    map cmd+b send_text normal,application \x02
-    map cmd+k send_text normal,application \f
-    map cmd+backspace send_text normal,application \x15
-    map cmd+left send_text normal,application \x01
-    map cmd+right send_text normal,application \x05
+      map cmd+b send_text normal,application \x02
+      map cmd+k send_text normal,application \f
+      map cmd+left send_text normal,application \x01
+      map cmd+right send_text normal,application \x05
     
-    map alt+left send_text normal,application ⌥<-
-    map alt+right send_text normal,application ⌥->
+      map cmd+backspace send_text normal,application ⌘⌫
+    
+      map alt+left send_text normal,application ⌥<-
+      map alt+right send_text normal,application ⌥->
 
+      map cmd+z send_text normal,application ⌘z
+      map cmd+shift+z send_text normal,application ⌘⇪z
     '';
   };
 }
