@@ -24,7 +24,7 @@
               type = "script";
               params.args = [
                 "python"
-                "~/Code/espanso/spark_link.py"
+                "~/Code/personal/espanso/spark_link.py"
               ];
             }
           ];
