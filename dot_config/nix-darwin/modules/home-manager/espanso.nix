@@ -25,7 +25,7 @@
               params.args = [
                 # TODO Requires Abosolute path
                 "/Users/brandon/.asdf/shims/python"
-                "/Users/brandon/code/repos/public/espanso/spark_link.py"
+                "/Users/brandon/code/public/espanso/spark_link.py"
               ];
             }
           ];
@@ -40,9 +40,8 @@
               type = "script";
               params.args = [
                 # TODO Requires Abosolute path
-                "/Users/brandon/.asdf/shims/python" 
-                "-c" 
-                "'import uuid; print(uuid.uuid4())'"
+                "/Users/brandon/.asdf/shims/python"
+                "/Users/brandon/code/public/espanso/get_uuid.py"
               ];
             }
           ];
