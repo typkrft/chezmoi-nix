@@ -1,3 +1,7 @@
+["code/public"]
+    type = "git-repo"
+    url = "https://github.com/typkrft/code_mono.git"
+
 ["code/private"]
     type = "git-repo"
     url = "https://github.com/typkrft/private_code_mono.git"
