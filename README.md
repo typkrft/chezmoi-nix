@@ -165,6 +165,7 @@ How in the fuck do you evaluate definitions in an `<unknown-file>`? This is just
 - [ ] How to work with submodules
 - [ ] Stacking keybindings skhd
 - [ ] Fork karamanliev/cascade add Tab Center Reborn Setup here https://github.com/andreasgrafen/cascade#how-to-set-it-up-1
+- [ ] convert externals to directory when released https://github.com/twpayne/chezmoi/issues/3106
 
 
 # Thanks
