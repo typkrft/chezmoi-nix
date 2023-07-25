@@ -1,0 +1,4 @@
+["code/public/espanso"]
+    type = "git-repo"
+    url = "https://github.com/typkrft/espanso.git"
+

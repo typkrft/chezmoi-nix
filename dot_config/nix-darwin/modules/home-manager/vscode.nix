@@ -70,20 +70,15 @@
           "icon" = "codicon-folder";
           "accent" = "#dc143c";
         }
+
         {
-          "id" = "832c2a3e-38e1-4729-bba3-361824001bf7";
-          "name" = "bartender";
-          "path" = "file:///Users/brandon/Code/Work/bartender";
+          "id" = "[Espanso]: An error occurred during rendering, please examine the logs for more information.";
+          "name" = "Chezmoi";
+          "path" = "file:///Users/brandon/.local/share/chezmoi";
           "icon" = "codicon-folder";
           "accent" = "#dc143c";
         }
-        {
-          "id" = "3b1959a2-b19f-4652-89b8-1360d3f4a2ec";
-          "name" = "temp bartender";
-          "path" = "file:///Users/brandon/Code/Work/temp_rewrite_bartender";
-          "icon" = "codicon-folder";
-          "accent" = "#dc143c";
-        }
+
       ];
       "dashyeah.folderSizing" = "col-12";
 

@@ -1,0 +1,8 @@
+["code/private/tender_scripts"]
+    type = "git-repo"
+    url = "https://github.com/typkrft/tender_scripts.git"
+
+["code/private/bots"]
+    type = "git-repo"
+    url = "https://github.com/typkrft/bots.git"
+

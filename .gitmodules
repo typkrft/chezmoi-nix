@@ -1,9 +1,3 @@
 [submodule "dot_config/nix-darwin/private"]
 	path = dot_config/nix-darwin/private
 	url = https://github.com/typkrft/chezmoi-nix-private.git
-[submodule "code/repos/external_private"]
-	path = code/repos/external_private
-	url = https://github.com/typkrft/private_code_mono
-[submodule "code/repos/external_public"]
-	path = code/repos/external_public
-	url = https://github.com/typkrft/code_mono

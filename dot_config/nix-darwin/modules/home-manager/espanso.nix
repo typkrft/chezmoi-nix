@@ -17,14 +17,32 @@
 
         {
           trigger = ":spark l";
-          repalce = "[$|$]({{link}})";
+          replace = "[$|$]({{link}})";
           vars = [
             {
               name = "link";
               type = "script";
               params.args = [
-                "python"
-                "~/Code/personal/espanso/spark_link.py"
+                # TODO Requires Abosolute path
+                "/Users/brandon/.asdf/shims/python"
+                "/Users/brandon/code/repos/public/espanso/spark_link.py"
+              ];
+            }
+          ];
+        }
+
+        {
+          trigger = ":uuid";
+          replace = "{{uuid}}";
+          vars = [
+            {
+              name = "uuid";
+              type = "script";
+              params.args = [
+                # TODO Requires Abosolute path
+                "/Users/brandon/.asdf/shims/python" 
+                "-c" 
+                "'import uuid; print(uuid.uuid4())'"
               ];
             }
           ];
