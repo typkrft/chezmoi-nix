@@ -64,6 +64,7 @@
       "obsidian"
       "visual-studio-code"
       "vivaldi"
+      "logi-options-plus"
     ];
 
     brews = [

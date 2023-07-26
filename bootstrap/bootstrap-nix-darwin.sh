@@ -1,34 +1,21 @@
 #!/usr/bin/env zsh
 
-# The new terminal must source the shell config nix created, and then it needs to be removed for nix-darwin
-timestamp=$(date +%s%N)
-sudo -S mv /etc/bashrc "/etc/bashrc.before-nix-darwin.$timestamp"
-sudo -S mv /etc/zshrc "/etc/zshrc.before-nix-darwin.$timestamp"
-sudo -S mv /etc/shells "/etc/shells.before-nix-darwin.$timestamp"
+configs=(/etc/zshrc /etc/bashrc /etc/bash.bashrc /etc/shells)
+for config in $configs; do 
+    timestamp=$(date +%s%N)    
+    if [ -f $config ]; then
+        printf "Moving %s to %s.\n" "$config" "$config.before-nix-darwin.$timestamp"
+        sudo -S mv "$config" "$config.before-nix-darwin.$timestamp"
+    fi
+done
 
-# Book Strap Flake
+printf "Bootstraping Nix Darwin and installing Flake.\n"
 nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake "$HOME/.config/nix-darwin/.#"
 
-if [[ ! -z "$(\ls -A $HOME/.local/share/chezmoi/bootstrap/run)" ]]; then
-    echo "Running Post Nix-Darwin Configurations"
+for file in "$HOME"/.local/share/chezmoi/bootstrap/run/*; do
+    printf "Running %s" "$file"
+    chmod +x "$file"
+    $file
+done
 
-    for file in "$HOME/.local/share/chezmoi/bootstrap/run/**/*(.)"; do 
-        echo "Running $file"
-        zsh $file
-    done
-fi
-
-cat <<EOF
-
-
-*******************************************************************************************************
-*******************************************************************************************************
-**                                                                                                   **
-**                                      BOOTSTRAP COMPLETE                                           **
-**                                You can close your terminal now                                    **
-**                                                                                                   **
-*******************************************************************************************************
-*******************************************************************************************************
-
-
-EOF
+printf "Installation Complete"

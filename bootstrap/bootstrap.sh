@@ -1,193 +1,105 @@
 #!/usr/bin/env zsh
 
+install_chezmoi() {
+    if  command -v chezmoi &> /dev/null; then
+        printf "Chezmoi is already installed. Skipping....\n"
+        return 0
+    fi
 
-# NOTE: Run with zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/bootstrap.sh)
-
-# TODO: Clean up messages 
-
-
-check_previous_installs() {
-    echo "Checking for previous installations...\n"
-    for directory in $1; do
-        if [ -d $directory ]; then
-            echo "Conflicting installation found: '$directory'.\n\n"
-            echo "Please ensure you backup and uninstall your previous installations first."
-            echo "https://nixos.org/manual/nix/unstable/installation/uninstall.html"
-            echo "https://www.chezmoi.io/user-guide/advanced/migrate-away-from-chezmoi"
-            exit 1
-        fi
-    done
-}
-
-
-backup_create_configs() {
-    for file in "${(v)files[@]}"; do
-        timestamp=$(date +%s%N)
-
-        if [ -L "$file" ]; then
-            echo "$file is a symbolic link not a file. Unlinking"
-            sudo -S unlink "$file" || sudo -S rm "$file"
-        fi
-
-        if [ -f "$file" ]; then
-            echo "Moving '$file' to '$file.before-chezmoi-nix.$timestamp'\n"
-            sudo -S mv "$file" "$file.before-chezmoi-nix.$timestamp"
-        fi
-
-        if [ -f "$file.backup-before-nix" ]; then
-            echo "Moving '$file.backup-before-nix' to '$file.before-chezmoi-nix.$timestamp'\n"            
-            sudo -S mv "$file.backup-before-nix" "$file.before-chezmoi-nix.$timestamp"
-        fi
-
-        if [ -f "$file.before-nix" ]; then 
-            echo "Moving '$file.before-nix' to '$file.before-chezmoi-nix.$timestamp'\n"            
-            sudo -S mv "$file.before-nix" "$file.before-chezmoi-nix.$timestamp"
-        fi
-
-        if [ -f "$file.backup-before-nix-darwin" ]; then
-            echo "Moving '$file.backup-before-nix-darwin' to '$file.before-chezmoi-nix.$timestamp'\n"            
-            sudo -S mv "$file.backup-before-nix-darwin" "$file.before-chezmoi-nix.$timestamp"
-        fi
-
-        echo "Creating $file\n"
-        sudo -S touch "$file"
-
-    done
+    if ! bash -ci "$(curl -fLsS  get.chezmoi.io)" -- -b "$HOME"/.local/bin; then
+        printf "Chezmoi failed to install. Exiting...\n"
+        exit 1
+    fi
 }
 
 
 install_homebrew() {
-    echo "\n\nInstalling Homebrew\n"
-    bash -ci "$(curl -fLsS $urls[homebrew])"
-    
-    if [ $? -eq 0 ]; then
-        echo "Homebrew was installed Successfully."
-    else
-        echo "Installation of Homebrew failed. Exiting."
+    if command -v brew &> /dev/null; then
+        printf "Homebrew is already installed. Skipping....\n"
+        return 0
+    fi
+
+    if ! bash -ci "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+        printf "Homebrew failed to install. Exiting...\n"
         exit 1
     fi
 }
 
 
 install_nix() {
-    echo "\n\nInstalling Nix\n"
-    bash -ci "$(curl -fLsS $urls[nix])"
-    
-    if [ $? -ne 0 ]; then
-        echo "\n\nInstallation of Nix failed. Exiting\n"
+    if [ -d /nix ]; then 
+        printf "Nix is already installed. Skipping....\n"
+        return 0
+    fi
+
+    configs=(/etc/zshrc /etc/bashrc /etc/bash.bashrc /etc/shells)
+    for config in $configs; do 
+
+        timestamp=$(date +%s%N)    
+        if [ -f $config ]; then
+            printf "Moving %s to %s.\n" "$config" "$config.before-nix.$timestamp"
+            sudo -S mv "$config" "$config.before-nix.$timestamp"
+        fi
+        
+        printf "Creating new empty %s.\n" "$config"
+        sudo -S touch "$config"
+    done
+
+    if ! bash -ci "$(curl -fLsS  https://nixos.org/nix/install)"; then 
+        printf "Nix failed to install. Exiting...\n"
         exit 1
     fi
 
-    echo "\n\nPost Installation Setup of Nix\n"
-    path+=('/nix/var/nix/profiles/default/bin')
     NIX_SSL_CERT_FILE='/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt'
 
+    printf "Starting Nix Daemon\n"
     sudo -S launchctl setenv NIX_SSL_CERT_FILE "$NIX_SSL_CERT_FILE"
     sudo -S launchctl kickstart -k system/org.nixos.nix-daemon
-    nix-shell -p nix-info --run "nix-info -m"
 
-    if [ $? -ne 0 ]; then
-        echo "\n\nPost Installation of Nix failed. Exiting\n"
+    printf "Making sure Nix installed and Active\n"
+    if ! nix-shell -p nix-info --run 'nix-info -m'; then
+        printf "Nix failed to install. Exiting...\n"
         exit 1
     fi
-
-    echo "\n\nNix was installed Successfully\n"
 }
 
 
-install_chezmoi() {
-    echo "\n\nInstalling Chezmoi\n"
-
-    if [ -d "$HOME/.local/share/chezmoi" ]; then
-        timestamp=$(date +%s%N)
-        echo "Existing Chezmoi directory found. Backing up to $HOME/.local/share/chezmoi.bak.$timestamp"
-        mv "$HOME/.local/share/chezmoi" "$HOME/.local/share/chezmoi.bak.$timestamp"
-    fi
-
-    echo "$urls[chezmoi]"
-    bash -ci "$(curl -fLsS $urls[chezmoi])" -- -b $HOME/.local/bin
-    
-    if [ $? -ne 0 ]; then
-        echo "Installation of Chezmoi failed. Exiting."
+setup_repos() {
+    if [ -d "$HOME"/.local/share/chezmoi ]; then
+        printf "Chezmoi source already exists. Exiting...\n"
         exit 1
     fi
 
-    echo "Post Installation setup for Chezmoi"
-    path+=("$HOME/.local/bin")
-    chezmoi init "$urls[dots]"
+    if [ -d "$HOME"/.config/nix-darwin ]; then
+        printf "Nix-Darwin repo already exists. Exiting...\n"
+        exit 1
+    fi
+
+    chezmoi init "$1"
     chezmoi apply -v
-
-    echo "Chezmoi was installed Successfully."
 }
 
 
-install_nix_darwin() {
-    echo "INFO: $(date +"%D %T"): Installing Nix-Darwin"
-       
-    [[ ! -d "$dirs[nix_darwin]" ]]; then
-        mkdir -p "$dirs[nix_darwin]"
-    fi
+bootstrap_nix_darwin(){
+    printf "This installation will continue in a new terminal window.\n"
 
-    ( cd "$dirs[nix_darwin]"; git init; git add -A )
-    if [ $? -ne 0 ]; then
-        echo "ERROR: $(date +"%D %T"): Installation of Nix-Darwin failed. Exiting"
-        exit 1
-    fi
-
-    cat <<EOF
-
-
-*******************************************************************************************************
-*******************************************************************************************************
-**                                                                                                   **
-**                      THIS INSTALLATION WILL CONTINUE IN A NEW TERMINAL WINDOW                     **
-** Please follow the instructions there and wait for the terminal to exit before closing this window **
-**                                                                                                   **
-*******************************************************************************************************
-*******************************************************************************************************
-
-
-EOF
-
-    chmod +x "$HOME/.local/share/chezmoi/bootstrap/bootstrap-nix-darwin.sh"
-    open -a Terminal.app "$HOME/.local/share/chezmoi/bootstrap/bootstrap-nix-darwin.sh"
+    chmod +x "$HOME"/.local/share/chezmoi/bootstrap/bootstrap-nix-darwin.sh
+    open -a Terminal.app -n "$HOME/.local/share/chezmoi/bootstrap-nix-darwin.sh"
 }
 
 
-main () {
-    declare -A urls
-    declare -A files
-    declare -A dirs
-
-    urls=(
-        [dots]='https://github.com/typkrft/chezmoi-nix'
-        [homebrew]='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
-        [nix]='https://nixos.org/nix/install'
-        [chezmoi]='https://get.chezmoi.io'
-    )
-
-    files=(
-        [etc_zshrc]='/etc/zshrc'
-        [etc_bashrc]='/etc/bashrc'
-        [etc_bash]='/etc/bash.bashrc'
-        [etc_shells]='/etc/shells'
-    )
-
-    dirs=(
-        [chezmoi_source]="$HOME/.local/share/chezmoi"
-        [chezmoi_bin]="$HOME/.local/bin"
-        [nix_store]="/nix"
-        [nix_darwin]="$HOME/.config/nix-darwin"
-    )
-
-    install_dirs=( "$dirs[chezmoi_source]" "$dirs[nix_store]" "$dirs[nix_darwin]" )
-    check_previous_installs "$install_dirs"
-    backup_create_configs 
-    install_homebrew
+main() {
     install_chezmoi
+    install_homebrew
     install_nix
-    install_nix_darwin
+
+    read 'user_repo?Enter the address for you chezmoi-nix repo: '
+    setup_repos "$user_repo"
+
+    bootstrap_nix_darwin
 }
 
+export PATH=/bin:/usr/bin:/opt/homebrew/bin:$HOME/.local/bin:/nix/var/nix/profiles/default/bin
 
+set -e 
 main

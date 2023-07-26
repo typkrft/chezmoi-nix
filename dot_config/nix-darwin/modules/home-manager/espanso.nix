@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.file."/Users/brandon/Library/Preferences/espanso/match/nix.yml" = {
     enable = true;
-    text = pkgs.lib.generators.toYAML {} {
+    text = pkgs.lib.generators.toYAML { } {
       matches = [
         {
           trigger = ":date";
@@ -32,6 +32,22 @@
         }
 
         {
+          trigger = ":yt e";
+          replace = "{{embed}}";
+          vars = [
+            {
+              name = "embed";
+              type = "script";
+              params.args = [
+                # TODO Requires Abosolute path
+                "/Users/brandon/.asdf/shims/python"
+                "/Users/brandon/code/public/espanso/create_yt_embed.py"
+              ];
+            }
+          ];
+        }
+
+        {
           trigger = ":uuid";
           replace = "{{uuid}}";
           vars = [
@@ -48,5 +64,5 @@
         }
       ];
     };
-  }; 
+  };
 }

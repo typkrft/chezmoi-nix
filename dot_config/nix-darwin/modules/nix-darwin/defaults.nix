@@ -22,13 +22,6 @@
     nix-index.enable = true;
   };
 
-  networking = {
-    dns = [
-      "10.10.10.3"
-      "10.10.10.21"
-    ];
-  };
-
   users.users."${nix-vars.username}".home = "/Users/${nix-vars.username}"; # Avoid /var/empty warnings/errors  
   # macOS Defaults
   system.defaults = {

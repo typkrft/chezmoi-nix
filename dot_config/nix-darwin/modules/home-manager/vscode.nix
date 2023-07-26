@@ -72,8 +72,8 @@
         }
 
         {
-          "id" = "[Espanso]: An error occurred during rendering, please examine the logs for more information.";
-          "name" = "Chezmoi";
+          "id" = "0292120e-ed39-4d36-bf09-f3dda5caa4f4";
+          "name" = "bartender";
           "path" = "file:///Users/brandon/.local/share/chezmoi";
           "icon" = "codicon-folder";
           "accent" = "#dc143c";
