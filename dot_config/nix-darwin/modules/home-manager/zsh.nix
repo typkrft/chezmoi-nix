@@ -115,10 +115,6 @@
       share = true;
     };
 
-    historySubstringSearch = {
-      enable = true;
-    };
-
     plugins = [
       {
         name = "fzf-tab";
