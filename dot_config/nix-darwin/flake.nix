@@ -76,6 +76,7 @@
                 ./modules/home-manager/tmux.nix
                 ./modules/home-manager/zellij.nix
                 ./modules/home-manager/espanso.nix
+                ./modules/home-manager/alfred.nix
                 ./private/ssh/nix/ssh.nix
               ];
             };
