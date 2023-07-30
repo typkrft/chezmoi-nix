@@ -1,0 +1,10 @@
+progress = true 
+verbose = true
+
+[git]
+autoAdd = true
+autoCommit = true
+autoPush = true
+
+[completion]
+custom = true
