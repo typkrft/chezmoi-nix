@@ -1,3 +1,0 @@
-[submodule "dot_config/nix-darwin/private"]
-	path = dot_config/nix-darwin/private
-	url = https://github.com/typkrft/chezmoi-nix-private.git
