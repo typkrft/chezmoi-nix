@@ -160,6 +160,9 @@ How in the fuck do you evaluate definitions in an `<unknown-file>`? This is just
   }
   ```
 
+## Yabai
+I do not believe that yabai is being setup properly. See [this issue on github](https://github.com/LnL7/nix-darwin/issues/750). I try to work around this with `~/.config/u-nix/post/nix/yabai` which is script run after a `darwin-rebuild`. Check out `~/.local/bin/u-nix`.
+
 # TODOS
 
 - [ ] Setup Bootstrap to properly pull and init submodule https://www.taniarascia.com/git-submodules-private-content/
