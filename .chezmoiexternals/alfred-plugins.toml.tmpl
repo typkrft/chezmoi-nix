@@ -1,0 +1,75 @@
+{{ if stat "/Applications/Alfred 5.app" }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "/Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/bitwarden")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/bitwarden"]
+#     type = "archive"
+#     url = "https://github.com/blacs30/bitwarden-alfred-workflow/releases/download/2.4.7/bitwarden-alfred-workflow.alfredworkflow#bitwarden-alfred.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/2fa")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/2fa"]
+#     type = "archive"
+#     url = "https://github.com/squatto/alfred-imessage-2fa/releases/download/v1.2.8/iMessage.2FA.alfredworkflow#2fa-alfred.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/paste-plain")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/paste-plain"]
+#     type = "archive"
+#     url = "https://github.com/alfredapp/paste-as-plain-text-from-hotkey-workflow/releases/download/2022.2/Paste.as.Plain.Text.from.Hotkey.alfredworkflow#Paste.as.Plain.Text.from.Hotkey.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/mouseless-messenger")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/mouseless-messenger"]
+#     type = "archive"
+#     url = "https://github.com/stephancasas/alfred-mouseless-messenger/releases/download/v2.0.3/Mouseless.Messenger.alfredworkflow#Mouseless.Messenger.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/obsidian")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/obsidian"]
+#     type = "archive"
+#     url = "https://github.com/chrisgrieser/shimmering-obsidian/releases/download/3.12.8/shimmering-obsidian.alfredworkflow#shimmering-obsidian.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/menubar")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/menubar"]
+#     type = "archive"
+#     url = "https://github.com/BenziAhamed/Menu-Bar-Search/releases/download/v2.0/Menu.Bar.Search.alfredworkflow#menubar-search.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/shortcuts")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/shortcuts"]
+#     type = "archive"
+#     url = "https://github.com/alfredapp/shortcuts-workflow/releases/download/2023.8/Shortcuts.alfredworkflow#Shortcuts.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/recorder")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/recorder"]
+#     type = "archive"
+#     url = "https://github.com/vitorgalvao/start-recording-workflow/releases/download/2023.3/Start.Recording.alfredworkflow#recorder.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/fzf")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/fzf"]
+#     type = "archive"
+#     url = "https://github.com/yohasebe/fzf-alfred-workflow/raw/main/fzf-alfred-workfow.alfredworkflow#fzf-workflow.zip"
+#     extract = true
+# {{ end }}
+
+# {{ if not (stat (joinPath .chezmoi.homeDir "Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/vscode")) }}
+# ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/vscode"]
+#     type = "archive"
+#     url = "https://github.com/phartenfeller/alfred-vscode-workspaces/archive/refs/tags/v1.1.0.zip"
+#     extract = true
+#     stripComponents = 1
+# {{ end }}
+
+{{ end }}
+

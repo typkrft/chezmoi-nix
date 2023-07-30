@@ -1,16 +1,31 @@
-{ pkgs, ... }: {
- # NOTE: To install workflow move it to /Users/brandon/Library/Application Support/Alfred/Alfred.alfredpreferences/workflows then unzip it 
+{ pkgs, config, ... }: {
+ # NOTE: To install workflow move it to Library/Application Support/Alfred/Alfred.alfredpreferences/workflows then unzip it 
  # ! fetchzip will fail because of the file extension using #someFileName.zip renames the output so that fetchzip will work
+
+# TODO: Add other prefernces like hide hat and maybe license file in the private nix repo
+
+# NOTE: info.plist needs to be mutable or atleast updateable by me, so it's kept in private/files/alfred. 
 
   home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/bitwarden" = {
     enable = true;
-    source = pkgs.fetchzip {
+    recursive = true; 
+    source = pkgs.fetchurl {
       name = "bitwarden-workflow";
-      url = "https://github.com/blacs30/bitwarden-alfred-workflow/releases/download/2.4.7/bitwarden-alfred-workflow.alfredworkflow#bitwarden-alfred.zip";
-      sha256 = "sha256-XMpKi5mblbZdZdrC3MX86Uz6FRjaIDYkH0BOKsrFokk=";
-      stripRoot = false;
+      url = "https://github.com/blacs30/bitwarden-alfred-workflow/releases/download/2.4.7/bitwarden-alfred-workflow.alfredworkflow";
+      sha256 = "sha256-qHSd0NjWVsvngbGTYsbjipIh3ROzE6bn4SmaPP0YPFw=";
+      downloadToTemp = true;
+      recursiveHash = true;
+      postFetch = ''
+        mv $downloadedFile bw-alfred.zip
+        ${pkgs.unzip}/bin/unzip bw-alfred.zip -x "info.plist" -d "$out"
+      '';
     };
   };
+
+  # home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/bitwarden/info.plist" = {
+  #   enable = true;
+  #   source = ../../private/files/alfred/bitwarden.plist;
+  # };
 
   home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/2fa" = {
     enable = true;
@@ -22,17 +37,49 @@
     };
   };
 
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext-alfred" = {
+  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/menubar" = {
     enable = true;
-    source = pkgs.fetchzip {
-      name = "paste-plaintext-workflow";
-      url = "https://github.com/alfredapp/paste-as-plain-text-from-hotkey-workflow/releases/download/2022.2/Paste.as.Plain.Text.from.Hotkey.alfredworkflow#Paste.as.Plain.Text.from.Hotkey.zip";
-      sha256 = "sha256-r2KT9xq077g7O9ruTIuScmUCPW3zsvP6n4L351QTAnY=";
-      stripRoot = false;
+    recursive = true; 
+    source = pkgs.fetchurl {
+      name = "menubar-workflow";
+      url = "https://github.com/BenziAhamed/Menu-Bar-Search/releases/download/v2.0/Menu.Bar.Search.alfredworkflow";
+      sha256 = "sha256-j6HzYtYJesE6tT9o6NVuOrPym+sN401Sn0WFE3OnKh4=";
+      downloadToTemp = true;
+      recursiveHash = true;
+      postFetch = ''
+        mv $downloadedFile menubar-alfred.zip
+        ${pkgs.unzip}/bin/unzip menubar-alfred.zip -x "info.plist" -d "$out"
+      '';
     };
   };
 
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/mouseless-messenger-alfred" = {
+  # home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/menubar/info.plist" = {
+  #   enable = true;
+  #   source = ../../private/files/alfred/menubar.plist;
+  # };
+
+  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext" = {
+    enable = true;
+    recursive = true; 
+    source = pkgs.fetchurl {
+      name = "paste-plaintext-workflow";
+      url = "https://github.com/alfredapp/paste-as-plain-text-from-hotkey-workflow/releases/download/2022.2/Paste.as.Plain.Text.from.Hotkey.alfredworkflow";
+      sha256 = "sha256-QhjlYkJNBNRCL9gnw6QlXzLOx9wyD7Z0aotaPJ4i/+Y=";
+      downloadToTemp = true;
+      recursiveHash = true;
+      postFetch = ''
+        mv $downloadedFile paste-plaintext-alfred.zip
+        ${pkgs.unzip}/bin/unzip paste-plaintext-alfred.zip -x "info.plist" -d "$out"
+      '';
+    };
+  };
+
+  # home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext/info.plist" = {
+  #   enable = true;
+  #   source = ../../private/files/alfred/paste-plaintext.plist;
+  # };
+
+  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/mouseless-messenger" = {
     enable = true;
     source = pkgs.fetchzip {
       name = "mouseless-messenger-workflow";
@@ -42,27 +89,7 @@
     };
   };
 
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/shimmering-obsidian" = {
-    enable = true;
-    source = pkgs.fetchzip {
-      name = "shimmering-obsidian-workflow";
-      url = "https://github.com/chrisgrieser/shimmering-obsidian/releases/download/3.12.8/shimmering-obsidian.alfredworkflow#shimmering-obsidian.zip";
-      sha256 = "sha256-Xn6xiqICWStVEzSTQzaEhBPf9VUsMnRIXJeyBxNRQTM=";
-      stripRoot = false;
-    };
-  };
-
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/menubar-search-alfred" = {
-    enable = true;
-    source = pkgs.fetchzip {
-      name = "menubar-search-workflow";
-      url = "https://github.com/BenziAhamed/Menu-Bar-Search/releases/download/v2.0/Menu.Bar.Search.alfredworkflow#menubar-search-obsidian.zip";
-      sha256 = "sha256-56OwBb3XeLBatSIPP2njvDK1bju0OQwjAgasTWZq+eA=";
-      stripRoot = false;
-    };
-  };
-
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/shortcuts-alfred" = {
+  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/shortcuts" = {
     enable = true;
     source = pkgs.fetchzip {
       name = "shortcuts-workflow";
@@ -72,35 +99,68 @@
     };
   };
 
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/fzf-alfred" = {
+  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/recorder" = {
     enable = true;
-    source = pkgs.fetchzip {
-      name = "fzf-workflow";
-      url = "https://github.com/yohasebe/fzf-alfred-workflow/raw/main/fzf-alfred-workfow.alfredworkflow#fzf-workflow.zip";
-      sha256 = "sha256-JY77vvL9/H095s79tEVT3rS4JCmT9Zq3S3ssXmqA/jk=";
-      stripRoot = false;
-    };
-  };
-
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/recorder-obsidian" = {
-    enable = true;
-    source = pkgs.fetchzip {
+    recursive = true; 
+    source = pkgs.fetchurl {
       name = "recorder-workflow";
-      url = "https://github.com/vitorgalvao/start-recording-workflow/releases/download/2023.3/Start.Recording.alfredworkflow#recorder.zip";
-      sha256 = "sha256-hhH+AhFyrc6oIBEUPlYE2I5J/WTZHlw6V0IP0iR00IA=";
-      stripRoot = false;
+      url = "https://github.com/vitorgalvao/start-recording-workflow/releases/download/2023.3/Start.Recording.alfredworkflow";
+      sha256 = "sha256-OFhozALtmilvRqH+ZAs6i+mJXZf7VyNTj0LlH8hLLv4=";
+      downloadToTemp = true;
+      recursiveHash = true;
+      postFetch = ''
+        mv $downloadedFile recorder-alfred.zip
+        ${pkgs.unzip}/bin/unzip recorder-alfred.zip -x "info.plist" -d "$out"
+      '';
     };
   };
 
-  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/vscode-obsidian" = {
+  # home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/recorder/info.plist" = {
+  #   enable = true;
+  #   source = ../../private/files/alfred/recorder.plist;
+  # };
+
+  home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/obsidian" = {
     enable = true;
-    source = pkgs.fetchzip {
-      name = "vscode-workflow";
-      url = "https://github.com/Acidham/alfred-vscode-workspace-explorer/releases/download/v1.0.0/VSCode.Workspace.Explorer.alfredworkflow#vscode.zip";
-      sha256 = "sha256-Fpyj5MCTO1tqUqoPAodhxLjq8OsO2tLLJCX7xRqU8vw=";
-      stripRoot = false;
+    recursive = true; 
+    source = pkgs.fetchurl {
+      name = "obsidian-workflow";
+      url = "https://github.com/chrisgrieser/shimmering-obsidian/releases/download/3.12.8/shimmering-obsidian.alfredworkflow";
+      sha256 = "sha256-ps0kdpcjnzE1cc1edkq9fKdhNweTrNgRJ1sD1atClII=";
+      downloadToTemp = true;
+      recursiveHash = true;
+      postFetch = ''
+        mv $downloadedFile obsidian-alfred.zip
+        ${pkgs.unzip}/bin/unzip obsidian-alfred.zip -x "info.plist" -d "$out"
+      '';
     };
   };
+
+  # home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/obsidian/info.plist" = {
+  #   enable = true;
+  #   source = ../../private/files/alfred/obsidian.plist;
+  # };
+
+  # home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/fzf-alfred" = {
+  #   enable = true;
+  #   source = pkgs.fetchzip {
+  #     name = "fzf-workflow";
+  #     url = "https://github.com/yohasebe/fzf-alfred-workflow/raw/main/fzf-alfred-workfow.alfredworkflow#fzf-workflow.zip";
+  #     sha256 = "sha256-JY77vvL9/H095s79tEVT3rS4JCmT9Zq3S3ssXmqA/jk=";
+  #     stripRoot = false;
+  #   };
+  # };
+
+
+  # home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/vscode-obsidian" = {
+  #   enable = true;
+  #   source = pkgs.fetchzip {
+  #     name = "vscode-workflow";
+  #     url = "https://github.com/Acidham/alfred-vscode-workspace-explorer/releases/download/v1.0.0/VSCode.Workspace.Explorer.alfredworkflow#vscode.zip";
+  #     sha256 = "sha256-Fpyj5MCTO1tqUqoPAodhxLjq8OsO2tLLJCX7xRqU8vw=";
+  #     stripRoot = false;
+  #   };
+  # };
 
   # TODO: Template this 
   home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/themes/typkrft-custom/theme.json" = {

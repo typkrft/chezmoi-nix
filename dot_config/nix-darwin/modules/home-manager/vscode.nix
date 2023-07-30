@@ -16,6 +16,7 @@
       aaron-bond.better-comments
       alefragnani.bookmarks
       beardedbear.beardedicons
+      ivhernandez.vscode-plist
       bierner.markdown-mermaid
       bobmagicii.dashyeah
       canadaduane.vscode-kmonad
