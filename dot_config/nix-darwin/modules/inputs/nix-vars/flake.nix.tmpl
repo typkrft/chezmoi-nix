@@ -1,0 +1,44 @@
+{
+  outputs = { ... }: {
+    username = "{{- .chezmoi.username -}}";
+    hostname = "{{- .chezmoi.hostname -}}";
+
+    themes = {
+      kittyTheme = "Dracula";
+      font = "Iosevka Nerd Font";
+
+      dracula = {
+        hex = {
+          color0 = "21222C"; # Black
+          color1 = "FF5555"; # Red
+          color2 = "50FA7B"; # Green
+          color3 = "F1FA8C"; # Yellow
+          color4 = "BD93F9"; # Blue
+          color5 = "FF79C6"; # Magenta
+          color6 = "8BE9FD"; # Cyan
+          color7 = "F8F8F2"; # White
+          color8 = "6272A4"; # Bright Black
+          color9 = "FF6E6E"; # Bright Red
+          color10 = "69FF94"; # Bright Green
+          color11 = "FFFFA5"; # Bright Yellow
+          color12 = "D6ACFF"; # Bright Blue
+          color13 = "FF92DF"; # Bright Magenta
+          color14 = "A4FFFF"; # Bright Cyan
+          color15 = "FFFFFF"; # Bright White
+          # Extra
+          background = "282A36";
+          foreground = "F8F8F2";
+          selection = "44475A";
+          comment = "6272A4";
+          red = "FF5555";
+          orange = "FFB86C";
+          yellow = "F1FA8C";
+          green = "50FA7B";
+          purple = "BD93F9";
+          cyan = "8BE9FD";
+          pink = "FF79C6";
+        };
+      };
+    };
+  };
+}

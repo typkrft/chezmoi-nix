@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+if ! command -v yabai &> /dev/null; then
+    printf "Yabai is not installed. Exiting\n"
+    [[ -f  /private/etc/sudoers.d/yabai ]] && sudo -S /private/etc/sudoers.d/yabai
+    exit 0
+fi
+
+hash_path=$(/usr/bin/shasum -a 256 $(which yabai))
+if [[ ! -f /private/etc/sudoers.d/yabai ]]; then
+    sudo -S touch /private/etc/sudoers.d/yabai
+    echo "$USER ALL=(root) NOPASSWD: sha256:$hash_path --load-sa" | sudo -S /usr/bin/tee -a /private/etc/sudoers.d/yabai
+    printf "/private/etc/sudoers.d/yabai is up to date.\n"
+    exit 0
+fi 
+
+if [[ $(sudo -S /usr/bin/grep -q "$hash_path" /private/etc/sudoers.d/yabai) ]]; then
+    printf "/private/etc/sudoers.d/yabai is up to date."
+    exit 0
+fi 
+
+sudo -S rm /private/etc/sudoers.d/yabai
+sudo -S touch /private/etc/sudoers.d/yabai
+echo "$USER ALL=(root) NOPASSWD: sha256:$hash_path --load-sa" | sudo -S /usr/bin/tee -a /private/etc/sudoers.d/yabai
+printf "/private/etc/sudoers.d/yabai is up to date.\n"
+

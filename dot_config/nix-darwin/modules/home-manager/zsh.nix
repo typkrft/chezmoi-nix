@@ -9,7 +9,7 @@
 
     shellAliases = {
       dots = "(chezmoi cd; code .)";
-      u-nix = ''chezmoi apply -v && git -C "$HOME/.config/nix-darwin" add -A && darwin-rebuild switch --flake "$HOME/.config/nix-darwin/.#"'';
+      # u-nix = ''chezmoi apply -v && git -C "$HOME/.config/nix-darwin" add -A && darwin-rebuild switch --flake "$HOME/.config/nix-darwin/.#"'';
       g-nix = "nix-collect-garbage -d && sudo nix-collect-garbage -d";
       o-nix = "nix store optimise";
       ssh = "TERM=xterm-256color ssh";

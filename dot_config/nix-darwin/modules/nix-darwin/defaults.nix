@@ -83,9 +83,9 @@
       };
     };
 
-    trackpad = {
-      TrackpadThreeFingerDrag = true; # TODO is this working
-    };
+    # trackpad = {
+    #   TrackpadThreeFingerDrag = true; # TODO is this working
+    # };
 
     NSGlobalDomain = {
       _HIHideMenuBar = true;

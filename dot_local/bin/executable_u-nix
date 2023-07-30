@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+# Run Pre Chezmoi Scripts
+find "$HOME"/.config/u-nix/pre/ -type f -exec {} \;
+
+# Update Chezmoi
+chezmoi apply -v
+
+# Run Post Chezmoi Scripts
+find "$HOME"/.config/u-nix/post/chezmoi/ -type f -exec {} \;
+
+# Make sure nix flake repo is tracking all files and update 
+git -C "$HOME/.config/nix-darwin" add -A 
+darwin-rebuild switch --flake "$HOME/.config/nix-darwin/.#"
+
+# Run Post Nix flake update scripts
+find "$HOME"/.config/u-nix/post/nix/ -type f -exec {} \;
