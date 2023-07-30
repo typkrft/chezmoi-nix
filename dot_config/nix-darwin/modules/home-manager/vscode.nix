@@ -166,6 +166,18 @@
       "[yaml]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
+      "colorize.languages" = [
+        "css"
+        "sass"
+        "scss"
+        "less"
+        "postcss"
+        "sss"
+        "stylus"
+        "xml"
+        "svg"
+        "toml"
+      ];
     };
   };
 }
