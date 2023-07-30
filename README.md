@@ -67,6 +67,7 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 - [Nix Cheatsheet](https://cheat.readthedocs.io/en/latest/nixos/nix_lang.html)
 - [Learn X in Y](https://learnxinyminutes.com/docs/nix/)
 - [Nix Pills](https://nixos.org/guides/nix-pills/)
+- [Great Post On Using Chezmoi](https://pbs.bartificer.net/pbs123)
 
 ## Documentation
 
