@@ -2,6 +2,10 @@
 
 This setup is meant to be reasonably idempotent. This means we will define a configuration that produces a single result regardless of how many times it is run. In order to this we use **nix-darwin**, which is a module for the **nix package manager**. On top of **nix-darwin**, we use **homebrew** for certain packages and **home-manager** for various services and configurations. The packages throughout the **nix** portion of the configuration are set to use the latest package from the **unstable branch**. **Homebrew** for various reasons is needed for packages unavailable or inconvenient to setup and/or manage through **nix**, such as GUI applications. **Nix** symlinks and places GUI apps to a number of non standard locations, which is less than ideal. Lastly, we use **chezmoi** to bootstrap the installation of **nix** and to handle secrets, which aren't easily managed by **nix**.
 
+A lot of people state that flakes "are not" experimental, this is not my opinnion. Flakes are, I believe, a large part of the recent hype around nix. There are some pain points around secrets and mutable files. Currently there is no built in, official way, to maintain anything secret. People try to do things like use private repos, or copy in files from elsewhere, or use modules like agenix, but anything you copy into the nix store is **WORLD** readable. This means any user or anyone who can access a user on that computer can read any file in the nixstore. This is being tackled currently in a [proposed rfc](https://github.com/NixOS/rfcs/pull/143). Agenix does hash things, but I will wait for an official solution. You've been warned. 
+
+Chezmoi resolves some of these issues. Firstly, you can use chezmoi to template nix files, this is really powerful but I try to use it minimally as this feels like I might configure myself into a corner if used too much. Secondly, I can use chezmoi to pull text out of password managers, pull down private repos, which are not copied into the nixstore and then place files where they need to go directly. This is helpful for not only secrets, but when files need to be mutable as well. Like the `info.plist` for Alfred workflows.
+
 While this configuration, in it's current itteration, is currently tailored to **macOS (Darwin)**, which **is fully unix compliant**, most of the configuration and software will run anywhere. The **major differences** being, primarily, **in the setup**.
 
 ---
@@ -99,6 +103,7 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 - [Nerd Fonts Symbol Search](https://www.nerdfonts.com/cheat-sheet)
 - [MacOS Hex Keycodes](https://gist.github.com/eegrok/949034)
 - [ZSH Keybinds](https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets)
+- [Builtins Documentation and Examples](https://teu5us.github.io/nix-lib.html)
 
 # Issues
 
@@ -134,7 +139,7 @@ There be dragons here and your sword is drenched in poison. Make sure you don't 
 
 How in the fuck do you evaluate definitions in an `<unknown-file>`? This is just an excerpt from a problem I had. Nix worked, and without even changing my configuration stopped working when I went to rebuild my config to update brew packages. The "solution" was to delete my `flake.lock` so it would redownload my flake inputs. No idea what was resolved, why it was resolved, etc. Cool...cool.
 
-- Nix has a greate package repository, arguably one of the best. However occassionally, particularly for darwin, packages you'd expect to exist simply don't or are occassionally not up-to-date even in unstable. It's not as ubiquitous as homebrew is for mac users and just doesn't have the same level of maintainence. You can still use home-manager or nix-darwin though to configure a package.
+- Nix has a great package repository, arguably one of the best. However occassionally, particularly for darwin, packages you'd expect to exist simply don't or are occassionally not up-to-date even in unstable. It's not as ubiquitous as homebrew is for mac users and just doesn't have the same level of maintainence. You can still use home-manager or nix-darwin though to configure a package.
 
   1. Add the package to home brew.
   2. In the nix-darwin or home-manager for the config for the package, there is usually an option to specify a package. Set the package to a blank output like so: `pkgs.runCommand "firefox-0.0.0" { } "mkdir $out";`.
@@ -153,7 +158,6 @@ How in the fuck do you evaluate definitions in an `<unknown-file>`? This is just
       # ...
       };
   }
-
   ```
 
 # TODOS
