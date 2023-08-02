@@ -9,7 +9,7 @@ fi
 hash_path=$(/usr/bin/shasum -a 256 $(which yabai))
 if [[ ! -f /private/etc/sudoers.d/yabai ]]; then
     sudo -S touch /private/etc/sudoers.d/yabai
-    echo "$USER ALL=(root) NOPASSWD: sha256:$hash_path --load-sa" | sudo -S /usr/bin/tee -a /private/etc/sudoers.d/yabai
+    echo "$USER ALL=(root) NOPASSWD: sha256:$hash_path --load-sa" | sudo -S /usr/bin/tee -a /private/etc/sudoers.d/yabai  > /dev/null
     printf "/private/etc/sudoers.d/yabai is up to date.\n"
     exit 0
 fi 
@@ -21,6 +21,6 @@ fi
 
 sudo -S rm /private/etc/sudoers.d/yabai
 sudo -S touch /private/etc/sudoers.d/yabai
-echo "$USER ALL=(root) NOPASSWD: sha256:$hash_path --load-sa" | sudo -S /usr/bin/tee -a /private/etc/sudoers.d/yabai
+echo "$USER ALL=(root) NOPASSWD: sha256:$hash_path --load-sa" | sudo -S /usr/bin/tee -a /private/etc/sudoers.d/yabai  > /dev/null
 printf "/private/etc/sudoers.d/yabai is up to date.\n"
 

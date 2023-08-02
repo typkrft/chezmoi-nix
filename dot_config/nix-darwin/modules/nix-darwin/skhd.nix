@@ -1,4 +1,5 @@
 { ... }: {
+  #! TODO: SKHD Not in path https://github.com/NixOS/nixpkgs/issues/246740
   services.skhd.enable = true;
   
   # TODO Keys for stacking and inserting
@@ -27,6 +28,20 @@
     rctrl - z : yabai -m window --toggle zoom-fullscreen
     rctrl - t : yabai -m window --toggle topmost
     rctrl - i : yabai -m window --toggle sticky
+
+    # rctrl - enter: yabai -m window --insert stack
+    cmd + rctrl - up: yabai -m window --stack north
+    cmd + rctrl - down: yabai -m window --stack south 
+    cmd + rctrl - left: yabai -m window --stack west
+    cmd + rctrl - right: yabai -m window --stack east
+    
+    cmd + shift + rctrl - up: yabai -m window --insert north; yabai -m window --toggle float; yabai -m window --toggle float
+    cmd + shift + rctrl - down: yabai -m window --insert south; yabai -m window --toggle float; yabai -m window --toggle float
+    cmd + shift + rctrl - left: yabai -m window --insert west; yabai -m window --toggle float; yabai -m window --toggle float
+    cmd + shift + rctrl - right: yabai -m window --insert east; yabai -m window --toggle float; yabai -m window --toggle float
+
+    rctrl - 0x21: yabai -m window --focus stack.prev #! TODO: Seems to be broken on Sonoma Beta 4
+    rctrl - 0x1E: yabai -m window --focus stack.next #! TODO: Seems to be broken on Sonoma Beta 4
 
     rctrl - 1 : yabai -m space --focus 1 
     rctrl - 2 : yabai -m space --focus 2 

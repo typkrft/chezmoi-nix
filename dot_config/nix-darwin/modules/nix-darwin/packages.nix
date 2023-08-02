@@ -20,6 +20,7 @@
     zoxide
     trash-cli
     tealdeer
+    fclones
   ];
 
   # Homebrew

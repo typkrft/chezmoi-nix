@@ -1,10 +1,5 @@
 #!/usr/bin/env zsh
 
-if [[ ! -d "$HOME"/code/private ]]; then 
-    echo "$HOME/code/private does not exist."
-    exit 1
-fi 
-
 # SSH
 if [[ ! -d "$HOME"/.ssh || ! -d "$HOME"/code/private/ssh ]]; then
     printf "~/.ssh or ~/code/private/ssh do not exist. Exiting...\n"

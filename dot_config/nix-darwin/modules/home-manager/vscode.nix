@@ -82,8 +82,13 @@
 
       ];
       "dashyeah.folderSizing" = "col-12";
-
+      "[nix]" = {
+        "editor.defaultFormatter" = "jnoortheen.nix-ide";
+      };
       "[jsonc]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[json]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
       "[javascript]" = {

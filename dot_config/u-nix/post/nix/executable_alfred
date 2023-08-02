@@ -6,21 +6,33 @@ if [[ ! -d "$HOME"/code/private ]]; then
 fi 
 
 if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/bitwarden ]]; then
-    rsync -av "$HOME"/code/private/alfred/bitwarden.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/bitwarden/info.plist
+    ln -s "$HOME"/code/private/alfred/bitwarden.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/bitwarden/info.plist
 fi
 
 if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/menubar ]]; then
-    rsync -av "$HOME"/code/private/alfred/menubar.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/menubar/info.plist
+    ln -s "$HOME"/code/private/alfred/menubar.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/menubar/info.plist
 fi
 
 if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext ]]; then
-    rsync -av "$HOME"/code/private/alfred/paste-plaintext.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext/info.plist
+    ln -s "$HOME"/code/private/alfred/paste-plaintext.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext/info.plist
 fi
 
 if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/recorder ]]; then
-    rsync -av "$HOME"/code/private/alfred/recorder.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/recorder/info.plist
+    ln -s "$HOME"/code/private/alfred/recorder.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/recorder/info.plist
 fi
 
 if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/obsidian ]]; then
-    rsync -av "$HOME"/code/private/alfred/obsidian.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/obsidian/info.plist
+    ln -s "$HOME"/code/private/alfred/obsidian.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/obsidian/info.plist
+fi
+
+if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/firefox ]]; then
+    ln -s "$HOME"/code/private/alfred/firefox.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/firefox/info.plist
+fi
+
+if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/vscode ]]; then
+    ln -s "$HOME"/code/private/alfred/vscode.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/vscode/info.plist
+fi
+
+if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/fzf ]]; then
+    ln -s "$HOME"/code/private/alfred/fzf.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/fzf/info.plist
 fi

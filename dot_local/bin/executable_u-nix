@@ -4,14 +4,20 @@
 find "$HOME"/.config/u-nix/pre/ -type f -exec {} \;
 
 # Update Chezmoi
-chezmoi apply -v
+if ! chezmoi apply -v; then
+    printf "Chezmoi Apply Failed. Exiting..."
+    exit 1
+fi
 
 # Run Post Chezmoi Scripts
 find "$HOME"/.config/u-nix/post/chezmoi/ -type f -exec {} \;
 
 # Make sure nix flake repo is tracking all files and update 
 git -C "$HOME/.config/nix-darwin" add -A 
-darwin-rebuild switch --flake "$HOME/.config/nix-darwin/.#"
+if ! darwin-rebuild switch --flake "$HOME/.config/nix-darwin/.#"; then
+    printf "Darwin Rebuild Failed. Exiting..."
+    exit 1
+fi
 
 # Run Post Nix flake update scripts
 find "$HOME"/.config/u-nix/post/nix/ -type f -exec {} \;

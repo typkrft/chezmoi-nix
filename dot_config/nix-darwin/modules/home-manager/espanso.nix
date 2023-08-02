@@ -55,8 +55,7 @@
               name = "uuid";
               type = "script";
               params.args = [
-                # TODO Requires Abosolute path
-                "/Users/brandon/.asdf/shims/python"
+                "/Users/brandon/.asdf/shims/python" 
                 "/Users/brandon/code/public/espanso/get_uuid.py"
               ];
             }
