@@ -55,6 +55,31 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 - `diskutil resetUserPermissions / id -u`
   - Description: Restore known ~/ permissions
 
+
+## Examples
+
+**Fetch from Git**
+Note: This also shows how to manipulate the output and use ephemeral packages in a script.
+
+```nix
+home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/obsidian" = {
+  enable = true;
+  recursive = true;
+  source = pkgs.fetchurl {
+    name = "obsidian-workflow";
+    url = "https://github.com/chrisgrieser/shimmering-obsidian/releases/download/3.12.8/shimmering-obsidian.alfredworkflow";
+    sha256 = "sha256-ps0kdpcjnzE1cc1edkq9fKdhNweTrNgRJ1sD1atClII=";
+    downloadToTemp = true;
+    recursiveHash = true;
+    stripRoot = false;
+    postFetch = ''
+      mv $downloadedFile obsidian-alfred.zip
+      ${pkgs.unzip}/bin/unzip obsidian-alfred.zip -x "info.plist" -d "$out"
+    '';
+  };
+};
+```
+
 ## Aliases
 
 - `u-nix`: Apply Chezmoi and Rebuild Darwin Flake
@@ -98,6 +123,7 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 - [ZMRE](https://github.com/zmre/nix-config/tree/main)
 - [ZMRE Simple](https://github.com/zmre/mac-nix-simple-example)
 - [jtojnar](https://github.com/jtojnar/nixfiles/tree/3cfa96d86c2f8241ad693ba4daa45c56b17c4446)
+- [yuanw](https://github.com/yuanw/nix-home/tree/423afd8af50b3333cfad7e495b94ff913b1bb034)
 
 ## Misc.
 
@@ -105,6 +131,8 @@ zsh <(curl https://raw.githubusercontent.com/typkrft/chezmoi-nix/main/bootstrap/
 - [MacOS Hex Keycodes](https://gist.github.com/eegrok/949034)
 - [ZSH Keybinds](https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets)
 - [Builtins Documentation and Examples](https://teu5us.github.io/nix-lib.html)
+- [Yabai and SKHD Configs](https://digitalblake.com/2021/08/27/yabai-and-skhd-configs/)
+- [Reorder Elements in Flex Box with CSS - Firefox userChrome](https://www.geeksforgeeks.org/how-to-reorder-div-elements-using-css-only/#)
 
 # Issues
 
@@ -142,24 +170,24 @@ How in the fuck do you evaluate definitions in an `<unknown-file>`? This is just
 
 Nix has a great package repository, arguably one of the best. However occassionally, particularly for darwin, packages you'd expect to exist simply don't or are occassionally not up-to-date even in unstable. It's not as ubiquitous as homebrew is for mac users and just doesn't have the same level of maintainence. You can still use home-manager or nix-darwin though to configure a package.
 
-  1. Add the package to home brew.
-  2. In the nix-darwin or home-manager for the config for the package, there is usually an option to specify a package. Set the package to a blank output like so: `pkgs.runCommand "firefox-0.0.0" { } "mkdir $out";`.
+1. Add the package to home brew.
+2. In the nix-darwin or home-manager for the config for the package, there is usually an option to specify a package. Set the package to a blank output like so: `pkgs.runCommand "firefox-0.0.0" { } "mkdir $out";`.
 
-  Here is part of a flake I use for Firefox.
+Here is part of a flake I use for Firefox.
 
-  ```nix
-  { pkgs, themes, ... }: {
-      programs.firefox.enable = true;
-      # NOTE: Use a dummy package, Firefox is managed by homebrew
-      programs.firefox.package = pkgs.runCommand "firefox-0.0.0" { } "mkdir $out";
-      programs.firefox.profiles."ff-nix" = {
-          name = "ff-nix";
-          isDefault = true;
-          id = 0;
-      # ...
-      };
-  }
-  ```
+```nix
+{ pkgs, themes, ... }: {
+    programs.firefox.enable = true;
+    # NOTE: Use a dummy package, Firefox is managed by homebrew
+    programs.firefox.package = pkgs.runCommand "firefox-0.0.0" { } "mkdir $out";
+    programs.firefox.profiles."ff-nix" = {
+        name = "ff-nix";
+        isDefault = true;
+        id = 0;
+    # ...
+    };
+}
+```
 
 ## Yabai
 
@@ -188,6 +216,7 @@ I do not believe that yabai is being setup properly. See [this issue on github](
 - [ ] keyboard shortcuts firefox
 - [ ] add hook to [add ssh-keys to keychain](https://apple.stackexchange.com/questions/48502/how-can-i-permanently-add-my-ssh-private-key-to-keychain-so-it-is-automatically)
 - [ ] Add info.plist from other configured plugins to alfred repo, that aren't there already
+- [ ] Create Fclone aliases
 
 # Thanks
 

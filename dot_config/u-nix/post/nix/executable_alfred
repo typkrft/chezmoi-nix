@@ -5,34 +5,11 @@ if [[ ! -d "$HOME"/code/private ]]; then
     exit 1
 fi 
 
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/bitwarden ]]; then
-    ln -s "$HOME"/code/private/alfred/bitwarden.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/bitwarden/info.plist
-fi
-
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/menubar ]]; then
-    ln -s "$HOME"/code/private/alfred/menubar.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/menubar/info.plist
-fi
-
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext ]]; then
-    ln -s "$HOME"/code/private/alfred/paste-plaintext.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/paste-plaintext/info.plist
-fi
-
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/recorder ]]; then
-    ln -s "$HOME"/code/private/alfred/recorder.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/recorder/info.plist
-fi
-
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/obsidian ]]; then
-    ln -s "$HOME"/code/private/alfred/obsidian.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/obsidian/info.plist
-fi
-
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/firefox ]]; then
-    ln -s "$HOME"/code/private/alfred/firefox.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/firefox/info.plist
-fi
-
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/vscode ]]; then
-    ln -s "$HOME"/code/private/alfred/vscode.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/vscode/info.plist
-fi
-
-if [[ -d "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/fzf ]]; then
-    ln -s "$HOME"/code/private/alfred/fzf.plist "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/fzf/info.plist
-fi
+for file in "$HOME"/code/private/alfred/*; do
+    folder_name=$(basename -s .plist "$file")
+    if [[ ! -L "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/"$folder_name"/info.plist ]]; then
+        [[ -f "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/"$folder_name"/info.plist ]] && rm "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/"$folder_name"/info.plist
+        printf "linking '%s' to '%s/Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/%s/info.plist'\n" "$file" "$HOME" "$folder_name"
+        ln -s "$file" "$HOME"/Library/"Application Support"/Alfred/Alfred.alfredpreferences/workflows/"$folder_name"/info.plist
+    fi
+done

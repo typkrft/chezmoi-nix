@@ -9,19 +9,19 @@
     type = "archive"
     url = "https://github.com/squatto/alfred-imessage-2fa/releases/download/v1.2.8/iMessage.2FA.alfredworkflow#2fa-alfred.zip"
     extract = true
-    # exclude = ["info.plist"]
+    exclude = ["info.plist"]
 
 ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/paste-plain"]
     type = "archive"
     url = "https://github.com/alfredapp/paste-as-plain-text-from-hotkey-workflow/releases/download/2022.2/Paste.as.Plain.Text.from.Hotkey.alfredworkflow#Paste.as.Plain.Text.from.Hotkey.zip"
     extract = true
-    # exclude = ["info.plist"]
+    exclude = ["info.plist"]
 
 ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/mouseless-messenger"]
     type = "archive"
     url = "https://github.com/stephancasas/alfred-mouseless-messenger/releases/download/v2.0.3/Mouseless.Messenger.alfredworkflow#Mouseless.Messenger.zip"
     extract = true
-    # exclude = ["info.plist"]
+    exclude = ["info.plist"]
 
 ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/obsidian"]
     type = "archive"
@@ -39,13 +39,13 @@
     type = "archive"
     url = "https://github.com/alfredapp/shortcuts-workflow/releases/download/2023.8/Shortcuts.alfredworkflow#Shortcuts.zip"
     extract = true
-    # exclude = ["info.plist"]
+    exclude = ["info.plist"]
 
 ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/recorder"]
     type = "archive"
     url = "https://github.com/vitorgalvao/start-recording-workflow/releases/download/2023.3/Start.Recording.alfredworkflow#recorder.zip"
     extract = true
-    # exclude = ["info.plist"]
+    exclude = ["info.plist"]
 
 ["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/fzf"]
     type = "archive"
@@ -64,4 +64,15 @@
     url = "https://github.com/deanishe/alfred-firefox/releases/download/v0.2.2/Firefox-Assistant-0.2.2.alfredworkflow#Firefox-Assistant-0.2.2.zip"
     extract = true
     exclude = ["info.plist"]
+
+["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/paste-n"]
+    type = "archive"
+    url = "https://github.com/packal/repository/raw/master/com.bhishanpdl.pastenclipboards/paste_n_clipboards.alfredworkflow"
+    extract = true
+    exclude = ["info.plist"]
     
+["Library/Application Support/Alfred/Alfred.alfredpreferences/workflows/linkding"]
+    type = "archive"
+    url = "https://github.com/typkrft/alfred-linkding-workflow/raw/main/linkding.alfredworkflow"
+    extract = true
+    # exclude = ["info.plist"] #? It's just a single file which is the info.plist. The post u-nix alfred script with delete and add my configured one
