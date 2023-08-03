@@ -1,13 +1,13 @@
 { pkgs, ... }: {
 
-  home.file."Library/Application Support/Firefox/Profiles/ff-nix" = {
-    enable = true;
-    recursive = true;
-    source = pkgs.fetchgit {
-      url = "https://github.com/typkrft/cascade.git";
-      sha256 = "sha256-tSs165Q+VKD8t8uy/78ZQWEG14TYIpYmQ/50iGb1gbU=";
-    };
-  };
+  # home.file."Library/Application Support/Firefox/Profiles/ff-nix" = {
+  #   enable = true;
+  #   recursive = true;
+  #   source = pkgs.fetchgit {
+  #     url = "https://github.com/typkrft/cascade.git";
+  #     sha256 = "";
+  #   };
+  # };
 
   programs.firefox.enable = true;
   # NOTE: Use a dummy package, Firefox is managed by homebrew
@@ -46,6 +46,7 @@
       container-tabs-sidebar
       side-view
       simple-tab-groups
+      # tridactyl
       # enhancer-for-youtube
     ];
 
