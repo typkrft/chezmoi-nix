@@ -3,7 +3,7 @@
   environment.systemPackages = with pkgs; [
     coreutils
     curl
-    fd 
+    fd
     gnused
     neovim
     ripgrep
@@ -26,18 +26,18 @@
   # Homebrew
   homebrew = {
     enable = true;
-    
+
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";
       upgrade = true;
     };
-    
+
     global = {
       autoUpdate = true;
       brewfile = true;
     };
-    
+
     taps = [
       "homebrew/services"
       "homebrew/cask-versions"
@@ -51,26 +51,69 @@
       "PDF Expert" = 1055273043;
     };
 
-    # NOTE: Casks are prefered because of weird placement of GUI Apps by Nix / Nix Darwin
-    casks = [
-      "alfred"
-      "authy"
-      "betterdiscord-installer"
-      "caffeine"
-      "discord"
-      "espanso"
-      "firefox-developer-edition"
-      "kitty"
-      "libreoffice"
-      "obsidian"
-      "visual-studio-code"
-      "vivaldi"
-      "logi-options-plus"
+      # NOTE: Casks are prefered because of weird placement of GUI Apps by Nix / Nix Darwin
+      casks = [
+      {
+        name = "alfred";
+        greedy = true;
+      }
+      {
+        name = "authy";
+        greedy = true;
+      }
+      {
+        name = "betterdiscord-installer";
+        greedy = true;
+      }
+      {
+        name = "caffeine";
+        greedy = true;
+      }
+      {
+        name = "discord";
+        greedy = true;
+      }
+      {
+        name = "espanso";
+        greedy = true;
+      }
+      {
+        name = "firefox-developer-edition";
+        greedy = true;
+      }
+      {
+        name = "kitty";
+        greedy = true;
+      }
+      {
+        name = "libreoffice";
+        # greedy = true;
+      }
+      {
+        name = "obsidian";
+        greedy = true;
+      }
+      {
+        name = "visual-studio-code";
+        greedy = true;
+      }
+      {
+        name = "vivaldi";
+        # greedy = true;
+      }
+      {
+        name = "logi-options-plus";
+      }
     ];
 
     brews = [
       "php" # For 2fm alfred plugin 
-      "openssl" "readline" "sqlite3" "xz" "zlib" "tcl-tk" # Python Build Dependencies
+      "openssl"
+      "readline"
+      "sqlite3"
+      "xz"
+      "zlib"
+      "tcl-tk" # Python Build Dependencies
       "asdf"
     ];
 

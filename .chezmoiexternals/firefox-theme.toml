@@ -1,6 +1,7 @@
-["Library/Application Support/Firefox/Profiles/ff-nix/chrome"]
+["Library/Application Support/Firefox/Profiles/ff-nix"]
     type = "archive"
     url = "https://github.com/typkrft/cascade/archive/refs/heads/main.zip"
     extract = true
-    include = ["chrome/*", "integrations"]
+    include = ["*/chrome/**"]
+    stripComponents = 1
     refresh = "1h"

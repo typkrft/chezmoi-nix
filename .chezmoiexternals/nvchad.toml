@@ -1,0 +1,7 @@
+[".config/nvim"]
+    type = "archive"
+    url = "https://github.com/NvChad/NvChad/archive/refs/heads/v2.0.zip"
+    extract = true
+    exclude = ["*/.github/**", "LICENSE", ".gitignore"]
+    stripComponents = 1
+    refresh = "12h"

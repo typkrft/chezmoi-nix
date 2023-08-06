@@ -3,14 +3,24 @@
     enable = true;
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = true;
+    
     package = pkgs.runCommand "vscode-0.0.0"
       {
-        version = "1.8.1";
+        version = "0.0.0";
         pname = "vscode";
       } "mkdir $out";
 
+    # extensions = with pkgs.vscode-extensions; [
+    #   dracula-theme.theme-dracula
+    # ];
+
+
+    # Ran into an issue where extensions were not installing, removing ~/.vscode/extensions resolved this issue
     extensions = with pkgs.vscode-marketplace; [
       dracula-theme.theme-dracula
+      ms-python.python
+      charliermarsh.ruff
+      ms-python.vscode-pylance
       redhat.vscode-yaml
       pkgs.vscode-marketplace."4ops".packer
       aaron-bond.better-comments
@@ -20,7 +30,6 @@
       bierner.markdown-mermaid
       bobmagicii.dashyeah
       canadaduane.vscode-kmonad
-      charliermarsh.ruff
       christian-kohler.path-intellisense
       esbenp.prettier-vscode
       formulahendry.code-runner
@@ -35,7 +44,6 @@
       mechatroner.rainbow-csv
       mgesbert.python-path
       ms-azuretools.vscode-docker
-      ms-python.python
       ms-vscode-remote.remote-containers
       ms-vscode-remote.remote-ssh
       ms-vscode-remote.remote-ssh-edit
@@ -50,6 +58,7 @@
       timonwong.shellcheck
       tomoki1207.pdf
       yzhang.markdown-all-in-one
+      ms-python.black-formatter
       # wayou.vscode-todo-highlight
     ];
   };
@@ -93,6 +102,12 @@
       };
       "[javascript]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[css]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[python]" = {
+        "editor.defaultFormatter" = "ms-python.black-formatter";
       };
 
       "better-comments.tags" = [

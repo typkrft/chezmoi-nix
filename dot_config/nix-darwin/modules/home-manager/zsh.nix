@@ -164,6 +164,24 @@
           sha256 = "sha256-KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
         };
       }
+      {
+        name = "zsh-sudo";
+        file = "plugins/sudo/sudo.plugin.zsh";
+        src = pkgs.fetchgit {
+          url = "https://github.com/ohmyzsh/ohmyzsh";
+          sha256 = "sha256-W4VwjsFJaXwaZEw9DIiOrXVMoyMjF1GWq5ll+p5WPB0=";
+          sparseCheckout = [ "plugins/sudo" ];
+        };
+      }
+      {
+        name = "chezmoi-completion";
+        file = "completions/chezmoi.zsh";
+        src = pkgs.fetchgit {
+          url = "https://github.com/twpayne/chezmoi";
+          sha256 = "sha256-2Uejwg6sHZUzcVxoXjOJjX4a2JQlLVfzmdfqBYUsdH0=";
+          sparseCheckout = [ "completions/*.zsh" ];
+        };
+      }
     ];
   };
 }

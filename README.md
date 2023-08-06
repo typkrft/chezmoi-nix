@@ -195,28 +195,25 @@ I do not believe that yabai is being setup properly. See [this issue on github](
 
 # TODOS
 
-- [ ] Setup Bootstrap to properly pull and init submodule https://www.taniarascia.com/git-submodules-private-content/
-- [ ] Bootstrap adding keys to agents if not already
 - [ ] Bootstrap Digital Certificates
-- [ ] Submodules for work repos, wallpapers, etc
-- [ ] How to work with submodules
-- [ ] Stacking keybindings skhd
-- [ ] Fork karamanliev/cascade add Tab Center Reborn Setup here https://github.com/andreasgrafen/cascade#how-to-set-it-up-1
-- [ ] convert externals to directory when released https://github.com/twpayne/chezmoi/issues/3106
-- [ ] document use of submodules
-- [ ] https://github.com/NixOS/nix/issues/4423 research
-- [ ] While nix store is world readable, use chezmoi to directly place private files where they need to go. https://github.com/NixOS/rfcs/pull/143
-- [ ] cmd + k kitty skhd
-- [ ] stylix theming or .chezmoidata remove whats not needed
-- [ ] double esc to sudo command zsh
-- [ ] should chezmoi linked files in u-nix scripts be symlinks so mutable updates are saved?
-- [ ] firefox theming
 - [ ] ssh config clean up
+- [ ] add hook to [add ssh-keys to keychain](https://apple.stackexchange.com/questions/48502/how-can-i-permanently-add-my-ssh-private-key-to-keychain-so-it-is-automatically)
+- [ ] Document Extra Setup for Firefox theme https://github.com/andreasgrafen/cascade#how-to-set-it-up-1
+- [ ] convert externals to directory when released https://github.com/twpayne/chezmoi/issues/3106
+- [ ] cmd + k kitty skhd
+- [ ] double esc to sudo command zsh
 - [ ] vscode projects
 - [ ] keyboard shortcuts firefox
-- [ ] add hook to [add ssh-keys to keychain](https://apple.stackexchange.com/questions/48502/how-can-i-permanently-add-my-ssh-private-key-to-keychain-so-it-is-automatically)
-- [ ] Add info.plist from other configured plugins to alfred repo, that aren't there already
 - [ ] Create Fclone aliases
+- [ ] Try to get userContent.css working, might have to stick stylus
+- [ ] Request NUR firefox addons for those being used in FF but not in RYCEE repo.
+- [ ] Submodules for work repos, wallpapers, etc
+- [ ] stylix theming or .chezmoidata remove whats not needed
+- [ ] https://github.com/NixOS/nix/issues/4423 research
+
+## On Hold
+- [-] Stacking keybindings skhd - Yabai Stacking currently broken on sonoma
+- [-] While nix store is world readable, use chezmoi to directly place private files where they need to go. https://github.com/NixOS/rfcs/pull/143 - Complete but watching
 
 # Thanks
 
