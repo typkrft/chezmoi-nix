@@ -65,8 +65,8 @@
 
     rctrl - space : yabai -m window --swap largest
     rctrl + shift - x : yabai -m space --balance x-axis
-    rctrl + shift - y : yabai -m space --balance x-axis
-    rctrl - = : yabai -m space --balance
+    rctrl + shift - y : yabai -m space --balance y-axis
+    rctrl - 0x18 : yabai -m space --balance
 
     rctrl + shift - left : yabai -m window --resize left:-150:0 || yabai -m window --resize right:-150:0 || yabai -m window --resize left:150:0 || yabai -m window --resize right:150:0
     rctrl + shift - right : yabai -m window --resize left:150:0 || yabai -m window --resize right:150:0 || yabai -m window --resize left:-150:0 || yabai -m window --resize right:-150:0
