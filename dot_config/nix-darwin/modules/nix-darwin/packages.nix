@@ -6,6 +6,7 @@
     fd
     gnused
     neovim
+    rsync
     ripgrep
   ];
 
@@ -21,6 +22,7 @@
     trash-cli
     tealdeer
     fclones
+    watchman
   ];
 
   # Homebrew

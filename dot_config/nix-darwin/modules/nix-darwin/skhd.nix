@@ -29,7 +29,7 @@
     rctrl - t : yabai -m window --toggle topmost
     rctrl - i : yabai -m window --toggle sticky
 
-    # rctrl - enter: yabai -m window --insert stack
+    rctrl - return: yabai -m window --insert stack
     cmd + rctrl - up: yabai -m window --stack north
     cmd + rctrl - down: yabai -m window --stack south 
     cmd + rctrl - left: yabai -m window --stack west
@@ -64,6 +64,9 @@
     shift + rctrl - 9 : yabai -m window --space 9
 
     rctrl - space : yabai -m window --swap largest
+    rctrl + shift - x : yabai -m space --balance x-axis
+    rctrl + shift - y : yabai -m space --balance x-axis
+    rctrl - = : yabai -m space --balance
 
     rctrl + shift - left : yabai -m window --resize left:-150:0 || yabai -m window --resize right:-150:0 || yabai -m window --resize left:150:0 || yabai -m window --resize right:150:0
     rctrl + shift - right : yabai -m window --resize left:150:0 || yabai -m window --resize right:150:0 || yabai -m window --resize left:-150:0 || yabai -m window --resize right:-150:0

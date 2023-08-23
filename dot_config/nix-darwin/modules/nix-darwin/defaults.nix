@@ -48,7 +48,6 @@
       ShowPathbar = true;
     };
 
-
     ".GlobalPreferences"."com.apple.sound.beep.sound" = "/System/Library/Sounds/hero";
 
     screencapture = {
@@ -57,6 +56,8 @@
     };
 
     CustomUserPreferences = {
+      # "com.apple.finder._FXSortFoldersFirst" = true; #todo
+
       "com.apple.print.PrintingPrefs" = { "Quit When Finished" = true; }; # quit printer app once jobs complete
       "com.apple.AdLib" = { allowApplePersonalizedAdvertising = false; };
 

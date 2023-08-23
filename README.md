@@ -93,6 +93,7 @@ home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows
 - [Learn X in Y](https://learnxinyminutes.com/docs/nix/)
 - [Nix Pills](https://nixos.org/guides/nix-pills/)
 - [Great Post On Using Chezmoi](https://pbs.bartificer.net/pbs123)
+- [Official Documentation for Learning Nix](https://nix.dev/tutorials/first-steps/nix-language)
 
 ## Documentation
 
@@ -124,6 +125,7 @@ home.file."Library/Application Support/Alfred/Alfred.alfredpreferences/workflows
 - [ZMRE Simple](https://github.com/zmre/mac-nix-simple-example)
 - [jtojnar](https://github.com/jtojnar/nixfiles/tree/3cfa96d86c2f8241ad693ba4daa45c56b17c4446)
 - [yuanw](https://github.com/yuanw/nix-home/tree/423afd8af50b3333cfad7e495b94ff913b1bb034)
+- [rayandrew](https://github.com/rayandrew/nix-config)
 
 ## Misc.
 
@@ -192,6 +194,9 @@ Here is part of a flake I use for Firefox.
 ## Yabai
 
 I do not believe that yabai is being setup properly. See [this issue on github](https://github.com/LnL7/nix-darwin/issues/750). I try to work around this with `~/.config/u-nix/post/nix/yabai` which is script run after a `darwin-rebuild`. Check out `~/.local/bin/u-nix`.
+
+## Zellij
+[Zellij doesn't start](https://github.com/NixOS/nixpkgs/issues/216961)
 
 # TODOS
 

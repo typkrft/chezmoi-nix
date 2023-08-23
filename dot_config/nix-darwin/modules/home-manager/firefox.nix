@@ -132,6 +132,9 @@
       "general.smoothScroll.stopDecelerationWeighting" = 1.0;
       "mousewheel.default.delta_multiplier_y" = 300; # 250-400
 
+      "svg.context-properties.content.enabled" = true;
+      "signon.rememberSignons" = false;
+
 
       #   "browser.startup.homepage" = "https://lobste.rs";
       #   "browser.search.region" = "GB";
@@ -151,7 +154,6 @@
       #   "services.sync.engine.passwords" = false;
       #   "services.sync.engine.prefs" = false;
       #   "services.sync.engineStatusChanged.prefs" = true;
-      #   "signon.rememberSignons" = false;
     };
 
   };
